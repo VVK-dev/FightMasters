@@ -22,7 +22,7 @@ namespace FightMasters
         {
             //This method can be used by both cards and minions
 
-            Damage[]? DamageArray;
+            Damage[]? DamageArray = null;
 
             if (Item is IMinion minion)
             {
@@ -40,14 +40,14 @@ namespace FightMasters
 
                 //Before damage is actually dealt, the caster may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, Item.DamageDealt, true);
+                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageArray, true);
 
                 //Iterating through the damage array of the item
 
-                for (int i = 0; i < Item.DamageDealt.Length; i++)
+                for (int i = 0; i < DamageArray.Length; i++)
                 {
 
-                    ref Damage CurrentDamage = ref Item.DamageDealt[i];
+                    ref Damage CurrentDamage = ref DamageArray[i];
 
                     //Check for Dodge Tokens
 
@@ -103,7 +103,7 @@ namespace FightMasters
 
                 //After all damage is dealt, the opponent may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, Item.DamageDealt, false);
+                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageArray, false);
 
             }
 

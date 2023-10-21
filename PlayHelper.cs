@@ -15,9 +15,10 @@ namespace FightMasters
         //p1 refers to player 1, i.e. caster of the card i.e. the one who plays the card
         //p2 refers to player 2, i.e. target of the card i.e. the opponent of the one who plays the card
 
-        //Damage only play method
 
-        public static string PlayDamageCard(object Item, Player p1, Player p2)
+        //Method to deal damage only
+
+        public static string PlayDamage(object Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
@@ -77,7 +78,7 @@ namespace FightMasters
 
                     }
 
-                    //Check for pre damage event
+                    //Check for pre-damage event
 
                     CurrentDamage = p1.BeforeDealingDamage(CurrentDamage, p2);
 

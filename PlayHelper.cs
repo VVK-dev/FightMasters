@@ -34,6 +34,7 @@ namespace FightMasters
                 IsCard = true;
 
             }
+            //TO DO: Create custom exception for this case
             else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
 
             string PlayDamageSummary = string.Empty;

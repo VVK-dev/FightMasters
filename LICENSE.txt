@@ -17,10 +17,10 @@ desired by the original author (Varun Venkatadri), before incorporating any
 portion of this code into their project.
 
 2. Patent Protection:
-   - No person or organization, except the original author, may obtain patents
+   - No person or organization, except the original author (Varun Venkatadri), may obtain patents
 for any aspects of the Software. By using the Software, you agree not to seek,
 obtain, or enforce any patents on the Software's technology, components, or 
-algorithms. The original author (you) retains the exclusive right to seek and
+algorithms. The original author (Varun Venkatadri) retains the exclusive right to seek and
 enforce patents related to the Software.
 
 The above copyright notice and this permission notice shall be included in all

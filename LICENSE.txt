@@ -9,10 +9,19 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-1. For-profit use: If the Software is used for profit, the user must prominently attribute the original author (Varun Venkatadri) and must contact the original author (Varun Venkatadri) for express written permission in the form of a legal contract, which itself may contain further stipulations as desired by the original author (Varun Venkatadri), before incorporating any portion of this code into their project.
+1. For-profit use: If the Software is used for profit, the user must 
+prominently attribute the original author (Varun Venkatadri) and must contact 
+the original author (Varun Venkatadri) for express written permission in the 
+form of a legal contract, which itself may contain further stipulations as 
+desired by the original author (Varun Venkatadri), before incorporating any
+portion of this code into their project.
 
 2. Patent Protection:
-   - No person or organization, except the original author, may obtain patents for any aspects of the Software. By using the Software, you agree not to seek, obtain, or enforce any patents on the Software's technology, components, or algorithms. The original author (you) retains the exclusive right to seek and enforce patents related to the Software.
+   - No person or organization, except the original author, may obtain patents
+for any aspects of the Software. By using the Software, you agree not to seek,
+obtain, or enforce any patents on the Software's technology, components, or 
+algorithms. The original author (you) retains the exclusive right to seek and
+enforce patents related to the Software.
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.

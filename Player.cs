@@ -85,13 +85,9 @@ namespace FightMasters
         }
 
         //Deal Damage
-        public (Damage, bool) BeforeDealingDamage(Damage IncomingDamage, Player opponent)
+        public Damage BeforeDealingDamage(Damage IncomingDamage, Player opponent)
         {
 
-            bool blocked = false;
-
-            if (!this.ActivateDodgeTokens())
-            {
                 //Given that player hasn't dodged the instance of incoming damage, first calculate incoming damage
 
                 IncomingDamage = CalculateDamage(IncomingDamage, opponent);
@@ -110,32 +106,8 @@ namespace FightMasters
 
                 }
 
-                //Check for and activate any block tokens
 
-                if (this.TokensActive.ContainsKey("<+>"))
-                {
-
-                    IncomingDamage = this.ActivateBlockTokens(IncomingDamage);
-
-                    blocked = true;
-
-                }
-
-                //After event has been invoked, deal damage
-
-                opponent.TakeDamage(IncomingDamage);
-
-            }
-            else
-            {
-
-                //Changing incoming damage to 0 if player has dodged.
-
-                IncomingDamage.DamageType = "Dodged"; IncomingDamage.DamageValue = 0;
-
-            }
-
-            return (IncomingDamage, blocked);
+            return IncomingDamage;
 
         }
 
@@ -389,15 +361,19 @@ namespace FightMasters
 
         }
 
-        public Damage ActivateBlockTokens(Damage damage)
+        public (Damage,bool) ActivateBlockTokens(Damage damage)
         {
             //If TokensActive contains a key, that means that the length of the list that is the value of that key
             //is > 0. Therefore, the player has a Block token.
+
+            bool blocked = false;
 
             if (this.TokensActive.ContainsKey("<+>"))
             {
 
                 damage.DamageValue /= 2;
+
+                blocked = true;
 
                 //Remove most recent Block token
 
@@ -409,7 +385,7 @@ namespace FightMasters
 
             }
 
-            return damage;
+            return (damage,blocked);
 
         }
 

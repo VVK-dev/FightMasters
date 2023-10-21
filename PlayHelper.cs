@@ -18,36 +18,38 @@ namespace FightMasters
 
         //Damage only play method
 
-        public static string PlayDamage<T>(T Item, Player p1, Player p2) where T : ICard, IMinion
+        public static string PlayDamage(object Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
-            Damage[]? DamageArray = null;
+            Span<Damage> DamageArray = null;
 
             if (Item is IMinion minion)
             {
-                DamageArray = minion.DamageDealt;
+                DamageArray = new Span<Damage>(minion.DamageDealt);
             }
             else if (Item is ICard card)
             {
-                DamageArray = card.DamageDealt;
-            }
+                DamageArray = new Span<Damage>(card.DamageDealt);
 
-            string PlayDamageSummary = "";
+            }
+            else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
+
+            string PlayDamageSummary = string.Empty;
 
             if (DamageArray != null)
             {
 
                 //Before damage is actually dealt, the caster may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageArray, true);
+                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageArray.ToArray(), true);
 
                 //Iterating through the damage array of the item
 
                 for (int i = 0; i < DamageArray.Length; i++)
                 {
 
-                    ref Damage CurrentDamage = ref DamageArray[i];
+                    Damage CurrentDamage = DamageArray[i];
 
                     //Check for Dodge Tokens
 
@@ -77,33 +79,23 @@ namespace FightMasters
                     //Deal damage
 
                     CurrentDamage = p1.BeforeDealingDamage(CurrentDamage, p2);
-                    
-                    if ()
+
+                    (CurrentDamage, bool blocked) = p2.ActivateBlockTokens(CurrentDamage);
+
+                    if(blocked)
                     {
-
-                        IncomingDamage = this.ActivateBlockTokens(IncomingDamage);
-
-                     
-
-                    }
-
-                    if (p2.TokensActive.ContainsKey("<+>"))
-                    {
-
                         PlayDamageSummary += $"{p2.PlayerName} expends a block token to reduce the amount of " +
-                            $"damage they take by 50%, reducing the incoming instance of damage to " +
-                            $"{CurrentDamage} damage. ";
-
+                        $"damage they take by 50%, reducing the incoming instance of damage to " +
+                        $"{CurrentDamage} damage. ";
                     }
 
                     PlayDamageSummary += $"{p2.PlayerName} takes {CurrentDamage} damage. ";
-
 
                 }
 
                 //After all damage is dealt, the opponent may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageArray, false);
+                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageArray.ToArray(), false);
 
             }
 

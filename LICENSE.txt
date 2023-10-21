@@ -1,4 +1,4 @@
-License
+MIT License
 
 Copyright (c) 2023 Varun Venkatadri (also known as VVK-dev)
 

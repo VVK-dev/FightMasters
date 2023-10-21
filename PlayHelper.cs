@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FightMasters
 {
@@ -18,19 +17,20 @@ namespace FightMasters
 
         //Damage only play method
 
-        public static string PlayDamage(object Item, Player p1, Player p2)
+        public static string PlayDamageCard(object Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
+            bool IsCard = false;
+
             Span<Damage> DamageArray = null;
 
-            if (Item is IMinion minion)
-            {
-                DamageArray = new Span<Damage>(minion.DamageDealt);
-            }
+            if (Item is IMinion minion) { DamageArray = new Span<Damage>(minion.DamageDealt); }
             else if (Item is ICard card)
             {
+
                 DamageArray = new Span<Damage>(card.DamageDealt);
+                IsCard = true;
 
             }
             else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
@@ -41,8 +41,9 @@ namespace FightMasters
             {
 
                 //Before damage is actually dealt, the caster may say something (a voiceline may be triggered)
+                //Voicelines are only triggered on player based damage from cards, not minions
 
-                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageArray.ToArray(), true);
+                if(IsCard) { PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageArray, true); }
 
                 //Iterating through the damage array of the item
 
@@ -65,7 +66,7 @@ namespace FightMasters
 
                     //Check for poison tokens on player 1
 
-                    if (p1.TokensActive.ContainsKey("<P>"))
+                    if (IsCard) //Poison tokens are only triggered on player based damage from cards, not minions
                     {
 
                         CurrentDamage = p1.ActivatePosionTokens(CurrentDamage);
@@ -76,9 +77,11 @@ namespace FightMasters
 
                     }
 
-                    //Deal damage
+                    //Check for pre damage event
 
                     CurrentDamage = p1.BeforeDealingDamage(CurrentDamage, p2);
+
+                    //Check for block tokens
 
                     (CurrentDamage, bool blocked) = p2.ActivateBlockTokens(CurrentDamage);
 
@@ -89,13 +92,17 @@ namespace FightMasters
                         $"{CurrentDamage} damage. ";
                     }
 
+                    //Deal damage
+
+                    p2.TakeDamage(CurrentDamage);
+
                     PlayDamageSummary += $"{p2.PlayerName} takes {CurrentDamage} damage. ";
 
                 }
 
                 //After all damage is dealt, the opponent may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageArray.ToArray(), false);
+                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageArray, false);
 
             }
 

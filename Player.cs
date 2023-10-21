@@ -391,10 +391,10 @@ namespace FightMasters
 
         //VOICELINES
 
-        public string PlayDamageVoiceLines(Player opponent, Damage[] DamageDone, bool DealingDamage)
+        public string PlayDamageVoiceLines(Player opponent, Span<Damage> DamageDone, bool DealingDamage)
         {
 
-            string statement = "";
+            string statement = string.Empty;
 
             //20% chance whenever a player deals or takes damage to trigger a voiceline
 
@@ -403,7 +403,7 @@ namespace FightMasters
 
                 //Calculating the amount of damage done
 
-                double TotalDamageDone = DamageDone.Sum(x => x.DamageValue);
+                double TotalDamageDone = DamageDone.ToArray().Sum(x => x.DamageValue);
 
                 string DamageLevel = string.Empty;
 
@@ -488,7 +488,7 @@ namespace FightMasters
 
                 int RandomIndex = new Random().Next(0, VoiceLines.Length);
 
-                statement = VoiceLines[RandomIndex];
+                statement = VoiceLines[RandomIndex] + "\n";
             }
 
             return statement;

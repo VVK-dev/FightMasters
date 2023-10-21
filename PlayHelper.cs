@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FightMasters
 {
@@ -17,22 +18,36 @@ namespace FightMasters
 
         //Damage only play method
 
-        public static string PlayDamage(ICard Card, Player p1, Player p2)
+        public static string PlayDamage<T>(T Item, Player p1, Player p2) where T : ICard, IMinion
         {
+            //This method can be used by both cards and minions
+
+            Damage[]? DamageArray;
+
+            if (Item is IMinion minion)
+            {
+                DamageArray = minion.DamageDealt;
+            }
+            else if (Item is ICard card)
+            {
+                DamageArray = card.DamageDealt;
+            }
 
             string PlayDamageSummary = "";
 
-            if (Card.DamageDealt != null)
+            if (DamageArray != null)
             {
 
                 //Before damage is actually dealt, the caster may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, Card.DamageDealt, true);
+                PlayDamageSummary += p1.PlayDamageVoiceLines(p2, Item.DamageDealt, true);
 
-                for (int i = 0; i < Card.DamageDealt.Length; i++)
+                //Iterating through the damage array of the item
+
+                for (int i = 0; i < Item.DamageDealt.Length; i++)
                 {
 
-                    ref Damage CurrentDamage = ref Card.DamageDealt[i];
+                    ref Damage CurrentDamage = ref Item.DamageDealt[i];
 
                     //Check for Dodge Tokens
 
@@ -88,7 +103,7 @@ namespace FightMasters
 
                 //After all damage is dealt, the opponent may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, Card.DamageDealt, false);
+                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, Item.DamageDealt, false);
 
             }
 

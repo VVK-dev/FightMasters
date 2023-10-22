@@ -18,41 +18,30 @@ namespace FightMasters
 
         //Method to deal damage only
 
-        public static string PlayDamage(object Item, Player p1, Player p2)
+        public static string PlayDamage(dynamic Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
-            bool IsCard = false;
+            bool IsCard = ObjCheck(Item);
 
-            Span<Damage> DamageArray = null;
-
-            if (Item is IMinion minion) { DamageArray = new Span<Damage>(minion.DamageDealt); }
-            else if (Item is ICard card)
-            {
-
-                DamageArray = new Span<Damage>(card.DamageDealt);
-                IsCard = true;
-
-            }
-            //TO DO: Create custom exception for this case
-            else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
+            Span<Damage> DamageSpan = new Span<Damage>(Item.DamageDealt);
 
             string PlayDamageSummary = string.Empty;
 
-            if (DamageArray != null)
+            if (DamageSpan != null)
             {
 
                 //Before damage is actually dealt, the caster may say something (a voiceline may be triggered)
                 //Voicelines are only triggered on player based damage from cards, not minions
 
-                if(IsCard) { PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageArray, true); }
+                if(IsCard) { PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageSpan, true); }
 
                 //Iterating through the damage array of the item
 
-                for (int i = 0; i < DamageArray.Length; i++)
+                for (int i = 0; i < DamageSpan.Length; i++)
                 {
 
-                    Damage CurrentDamage = DamageArray[i];
+                    Damage CurrentDamage = DamageSpan[i];
 
                     //Check for Dodge Tokens
 
@@ -104,7 +93,7 @@ namespace FightMasters
 
                 //After all damage is dealt, the opponent may say something (a voiceline may be triggered)
 
-                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageArray, false);
+                PlayDamageSummary += p2.PlayDamageVoiceLines(p1, DamageSpan, false);
 
             }
 
@@ -207,6 +196,26 @@ namespace FightMasters
 
         }
 
+        //Method to check if incoming object is card or summon
+
+        public static bool ObjCheck(object Item)
+        {
+
+            bool IsCard = false;
+
+            if (Item is IMinion) { return IsCard; }
+            else if (Item is ICard)
+            {
+
+                IsCard = true;
+
+                return IsCard;
+
+            }
+            //TO DO: Create custom exception for this case
+            else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
+
+        }
 
         //Method to calculate damage dealt to player after resistances
 

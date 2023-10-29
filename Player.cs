@@ -190,6 +190,8 @@ namespace FightMasters
 
         //Token Effects
 
+        //TO DO: Create a token handler class? Put activate methods within tokens?
+
         public void ActivateBurnTokens()
         {
             //Check for burn tokens

@@ -18,7 +18,7 @@ namespace FightMasters
 
         //Method to deal damage only
 
-        public static string PlayDamage(dynamic Item, Player p1, Player p2)
+        public static string DamagePlayer(dynamic Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
@@ -45,7 +45,7 @@ namespace FightMasters
 
                     //Check for Dodge Tokens
 
-                    if (p2.ActivateDodgeTokens())
+                    if (TokenHandler.ActivateDodgeTokens(p2))
                     {
 
                         PlayDamageSummary += $"{p2.PlayerName} dodges the incoming {CurrentDamage} " +
@@ -60,7 +60,7 @@ namespace FightMasters
                     if (IsCard) //Poison tokens are only triggered on player based damage from cards, not minions
                     {
 
-                        CurrentDamage = p1.ActivatePosionTokens(CurrentDamage);
+                        CurrentDamage = TokenHandler.ActivatePosionTokens(p1, CurrentDamage);
 
                         PlayDamageSummary += $"{p1.PlayerName} takes 1 damage from an active poison token." +
                             $" The damage {p1.PlayerName} tries to deal is reduced by 10%, reducing it to " +
@@ -74,7 +74,7 @@ namespace FightMasters
 
                     //Check for block tokens
 
-                    (CurrentDamage, bool blocked) = p2.ActivateBlockTokens(CurrentDamage);
+                    (CurrentDamage, bool blocked) = TokenHandler.ActivateBlockTokens(p2, CurrentDamage);
 
                     if(blocked)
                     {
@@ -103,7 +103,7 @@ namespace FightMasters
 
         //Method to heal player
 
-        public static string PlayHeal(ICard Card, Player p1)
+        public static string HealPlayer(ICard Card, Player p1)
         {
 
             string HealSummary = "";
@@ -121,9 +121,9 @@ namespace FightMasters
 
         }
 
-        //Method to apply tokens to caster
+        //Method to add tokens to caster
 
-        public static string PlayCasterTokens(ICard Card, Player p1)
+        public static string AddCasterTokens(ICard Card, Player p1)
         {
 
             string CasterTokenSummary = "";
@@ -146,7 +146,7 @@ namespace FightMasters
 
         //Method to apply tokens to opponent
 
-        public static string PlayOpponentTokens(ICard Card, Player p2)
+        public static string AddOpponentTokens(ICard Card, Player p2)
         {
 
             string OpponentTokenSummary = "";
@@ -227,30 +227,31 @@ namespace FightMasters
 
             int correspondingresist = 0;
 
-            if (d.DamageType == "Physical")
+            switch (d.DamageType)
             {
-                correspondingresist = p2.Resistances["Physical"];
 
-            }
-            if (d.DamageType == "Fire")
-            {
-                correspondingresist = p2.Resistances["Fire"];
+                case "Physical":
+                    correspondingresist = p2.Resistances["Physical"];
+                    break;
 
-            }
-            if (d.DamageType == "Frost")
-            {
-                correspondingresist = p2.Resistances["Frost"];
+                case "Fire":
+                    correspondingresist = p2.Resistances["Fire"];
+                    break;
 
-            }
-            if (d.DamageType == "Lightning")
-            {
-                correspondingresist = p2.Resistances["Lightning"];
+                case "Frost":
+                    correspondingresist = p2.Resistances["Frost"];
+                    break;
 
-            }
-            if (d.DamageType == "Poison")
-            {
-                correspondingresist = p2.Resistances["Poison"];
+                case "Lightning":
+                    correspondingresist = p2.Resistances["Lightning"];
+                    break;
 
+                case "Poison":
+                    correspondingresist = p2.Resistances["Poison"];
+                    break;
+
+                //Currently, if none of the cases are satisfied then correspondingresist is left at 0.
+                //May change this in the future to throw an exception in this default case.
             }
 
             //Damage Calculation

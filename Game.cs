@@ -213,8 +213,8 @@ namespace FightMasters
 
             CurrentPlayer.CurrentStamina = CurrentPlayer.ActiveCharClass.MaxStamina;
 
-            CurrentPlayer.ActivateBurnTokens();
-            CurrentPlayer.ActivateChillTokens();
+            TokenHandler.ActivateBurnTokens(CurrentPlayer);
+            TokenHandler.ActivateChillTokens(CurrentPlayer);
 
             //Player loses stamina for this turn if they successfully dodged last turn
             CurrentPlayer.CurrentStamina -= CurrentPlayer.DodgeCounter;

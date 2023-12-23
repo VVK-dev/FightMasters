@@ -185,6 +185,7 @@ namespace FightMasters
 
         private static void Match()
         {
+            //TO DO: ADD WIN CONDITION
 
             int rounds = 1;
 
@@ -208,7 +209,7 @@ namespace FightMasters
         private static void Turn(Player CurrentPlayer, Player Opponent, ICard[] Hand)
         {
 
-            //Call activate token methods and caluclate stamina for this turn
+            //Call activate token methods and calculate stamina for this turn
 
             CurrentPlayer.CurrentStamina = CurrentPlayer.ActiveCharClass.MaxStamina;
 
@@ -348,19 +349,17 @@ namespace FightMasters
 
                 if (Summon != null)
                 {
-                    if(Summon.Duration > 0)
+                    if(Summon.Duration >= 1)
                     {
 
                         Summon.Act(CurrentPlayer, Opponent);
                         Summon.Duration--;
 
                     }
-                    if (Summon.Duration <= 0){ Summon = null; } 
+                    if (Summon.Duration < 1){ Summon = null; } 
                     
                     //Duration check happens both before and after summon has acted to prevent summon from acting if 
                     //duration is 0 or to remove summon from array if duration is 0 after acting
-
-                    //Double check done for redundancy
 
                 }
             }

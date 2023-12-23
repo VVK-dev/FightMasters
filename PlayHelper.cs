@@ -51,7 +51,7 @@ namespace FightMasters
                         PlayDamageSummary += $"{p2.PlayerName} dodges the incoming {CurrentDamage} " +
                             $"damage. ";
 
-                        return PlayDamageSummary;
+                        continue; //If this instance of damage is dodged, move to next instance
 
                     }
 
@@ -213,6 +213,7 @@ namespace FightMasters
 
             }
             //TO DO: Create custom exception for this case
+
             else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
 
         }

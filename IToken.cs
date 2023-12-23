@@ -25,7 +25,7 @@ namespace FightMasters
 
         //Deals 2 damage per round. Lasts 1 round (2 turns). More tokens = more damage. Max 5 stacks.
 
-        public Damage? Damage { get; } = new Damage("Fire", 2);
+        public Damage Damage { get; } = new Damage ("Fire", 2);
 
         public static int Capacity { get; } = 5;
 
@@ -84,7 +84,7 @@ namespace FightMasters
         //Deals 1 damage everytime that player tries to do damage and reduces their damage output by 10%.
         //Lasts 1 round. More tokens = stacking effects. Max 3 stacks.
 
-        public Damage? Damage { get; } = new Damage("Physical", 1);
+        public Damage Damage { get; } = new Damage("Physical", 1);
 
         public static int Capacity { get; } = 3;
 

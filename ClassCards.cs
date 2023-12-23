@@ -50,7 +50,7 @@ namespace FightMasters
 
                 p2.Resistances["Physical"] -= 20;
 
-                string PlaySummary = PlayHelper.PlayDamage(this, p1, p2);
+                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
 
                 p2.Resistances["Physical"] += 20;
 
@@ -111,7 +111,7 @@ namespace FightMasters
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string TokenSummary = PlayHelper.PlayOpponentTokens(this, p2);
+                string TokenSummary = PlayHelper.AddOpponentTokens(this, p2);
 
                 return TokenSummary;
 
@@ -148,10 +148,5 @@ namespace FightMasters
 
 
     }
-
-
-
-
-
 
 }

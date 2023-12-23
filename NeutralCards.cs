@@ -103,7 +103,7 @@ namespace FightMasters
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string PlaySummary = PlayHelper.PlayDamage(this, p1, p2);
+                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
 
                 //Zap has a 30% chance to apply a shock token to the target
 
@@ -112,7 +112,7 @@ namespace FightMasters
                 if (random.Next(1, 10) <= 3)
                 {
 
-                    PlaySummary += PlayHelper.PlayOpponentTokens(this, p2);
+                    PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
 
                 }
 
@@ -174,11 +174,11 @@ namespace FightMasters
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string PlaySummary = PlayHelper.PlayDamage(this, p1, p2);
+                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
 
                 //Dragon Breath applies a Burn token to the target
 
-                PlaySummary += PlayHelper.PlayOpponentTokens(this, p2);
+                PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
 
                 return PlaySummary;
 
@@ -298,7 +298,7 @@ namespace FightMasters
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string PlaySummary = PlayHelper.PlayDamage(this, p1, p2);
+                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
 
                 return PlaySummary;
 
@@ -321,7 +321,5 @@ namespace FightMasters
         }
 
     }
-
-
 
 }

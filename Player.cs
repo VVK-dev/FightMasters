@@ -109,8 +109,6 @@ namespace FightMasters
 
         }
 
-        //TOKEN METHODS
-
         //Add tokens
 
         public List<IToken> AddTokens(Dictionary<string, List<IToken>> tokens)

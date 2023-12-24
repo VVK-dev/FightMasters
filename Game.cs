@@ -350,7 +350,7 @@ namespace FightMasters
 
         }
 
-        //Method to make all of player's current summons act
+        //At the end of a player's turn, all of their summons will act
         private static void PlaySummons(Player CurrentPlayer, Player Opponent)
         {
 

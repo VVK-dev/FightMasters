@@ -109,6 +109,8 @@ namespace FightMasters
 
         }
 
+        //TO DO: Move this token method to token handler
+
         //Add tokens
 
         public List<IToken> AddTokens(Dictionary<string, List<IToken>> tokens)

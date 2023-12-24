@@ -1,5 +1,4 @@
-﻿
-namespace FightMasters
+﻿namespace FightMasters
 {
     public interface ICard
     {

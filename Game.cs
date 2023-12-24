@@ -150,7 +150,9 @@ namespace FightMasters
         private static Queue<ICard> PopulateDeck(ICharClass playerclass)
         {
 
-            ICard[] Deck = {new Zap(), new DragonBreath(), new LFrostShield(), new BoulderToss()};
+            ICard[] Deck = {new Zap(), new DragonBreath(), new LFrostShield(), new BoulderToss() 
+                    /*TO DO : Fill in with remaining cards*/
+            };
 
             Deck = (ICard[]) Deck.Concat(playerclass.ClassCards);
 
@@ -185,14 +187,33 @@ namespace FightMasters
 
         private static void Match()
         {
-            //TO DO: ADD WIN CONDITION
 
             int rounds = 1;
 
-            while (rounds < 15)
+            while (rounds <= 15)
             {
-                
-                //In 1 round, there are 2 turns - one for each player
+
+                //Win conditions
+
+                if(Player1.ActiveHp < 1) { Console.WriteLine("\n === PLAYER 2 WINS! === \n");
+
+                    /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
+
+                    return;
+                }
+
+                if (Player2.ActiveHp < 1)
+                {
+                    Console.WriteLine("\n === PLAYER 1 WINS! === \n");
+
+                    /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
+
+                    return;
+                }
+
+                //If win conditions are not satisfied, resume match:
+
+                //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
                 Turn(Player1, Player2, GetHand(Player1));

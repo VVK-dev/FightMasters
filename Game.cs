@@ -20,8 +20,9 @@ namespace FightMasters
 
         }
 
-        /*PRE- MATCH SETUP METHODS*/
+        /*PRE-MATCH SETUP METHODS*/
 
+        //Method to set up a match
         private static void MatchSetup()
         {
 
@@ -51,7 +52,6 @@ namespace FightMasters
         }
 
         //Pre-match class choice
-
         private static ICharClass ClassSetup(int PlayerNum)
         {
 
@@ -82,7 +82,6 @@ namespace FightMasters
         }
 
         //Pre-match set player names
-
         private static (string, string) NameSetup()
         {
 
@@ -101,7 +100,6 @@ namespace FightMasters
         }
 
         //Coin Flip to decide who goes first
-
         private static bool CoinFlip((string,string) PlayerNames)
         {
 
@@ -140,7 +138,6 @@ namespace FightMasters
         }
 
         //Create decks once player setups are complete
-
         private static Queue<ICard> PopulateDeck(ICharClass playerclass)
         {
 
@@ -159,7 +156,6 @@ namespace FightMasters
         }
 
         //Knuth shuffle algorithm to shuffle deck at start of match
-
         private static ICard[] ShuffleArray(ICard[] array)
         {
             Random random = new();
@@ -178,7 +174,6 @@ namespace FightMasters
         /*IN MATCH METHODS*/
 
         //Match method
-
         private static void Match()
         {
 
@@ -189,7 +184,9 @@ namespace FightMasters
 
                 //Win conditions
 
-                if(Player1.ActiveHp < 1) { Console.WriteLine("\n === PLAYER 2 WINS! === \n");
+                if(Player1.ActiveHp < 1) { 
+                    
+                    Console.WriteLine("\n === PLAYER 2 WINS! === \n");
 
                     /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
 
@@ -205,7 +202,7 @@ namespace FightMasters
                     return;
                 }
 
-                //If win conditions are not satisfied, resume match:
+                //If win conditions are not satisfied, continue match:
 
                 //In a single round, there are 2 turns - one for each player
 
@@ -340,6 +337,8 @@ namespace FightMasters
             return choice;
 
         }
+
+        /*END OF TURN METHODS*/
 
         //Method to call actions that occur at the end of a player's turn
         private static void EndTurn(ICard[] Hand, Player CurrentPlayer, Player Opponent)

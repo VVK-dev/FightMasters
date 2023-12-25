@@ -8,11 +8,13 @@ namespace FightMasters
         //PROPERTIES
 
         public ICharClass ActiveCharClass { get; private set; }
+        
         public string PlayerName { get; set; }
 
         public Queue<ICard> Deck { get; set; }
 
         public int ActiveHp { get; set; }
+
         public int CurrentStamina { get; set; }
 
         public IMinion?[] CurrentSummons { get; set; }

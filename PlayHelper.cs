@@ -16,7 +16,7 @@
 
             bool IsCard = ObjCheck(Item);
 
-            Span<Damage> DamageSpan = new Span<Damage>(Item.DamageDealt);
+            Span<Damage> DamageSpan = new (Item.DamageDealt);
 
             string PlayDamageSummary = string.Empty;
 

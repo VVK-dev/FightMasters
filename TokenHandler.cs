@@ -3,8 +3,82 @@
     internal abstract class TokenHandler
     {
 
-        //This class handles the activation and deactivation of tokens on players
+        /*This class handles the addition, activation and deactivation of tokens on players*/
 
+        //Add tokens
+
+        public static List<IToken> AddTokens(Dictionary<string, List<IToken>> tokens, Player player)
+        {
+
+            List<IToken> TokensAdded = new(); //List of tokens actually added to player from the incoming dictionary
+
+            foreach (KeyValuePair<string, List<IToken>> TokenElement in tokens)
+            {
+                if (player.TokensActive.Count < 4) //A player can only have a max of 4 types of tokens active on them
+                {
+
+                    string key = TokenElement.Key;
+
+                    if (player.TokensActive.ContainsKey(key))
+                    {
+                        //A token of a particular type has a limit on how many times it can be applied on to a player
+
+                        int capacity = 0;
+
+                        switch (key)
+                        {
+                            case "<B>":
+                                capacity = BurnToken.Capacity; break;
+                            case "<S>":
+                                capacity = ShockToken.Capacity; break;
+                            case "<C>":
+                                capacity = ChillToken.Capacity; break;
+                            case "<P>":
+                                capacity = PoisonToken.Capacity; break;
+                            case "</>":
+                                capacity = DodgeToken.Capacity; break;
+                            case "<+>":
+                                capacity = BlockToken.Capacity; break;
+
+                        }
+
+                        int AmountToAdd = player.TokensActive[key].Count - capacity;
+                        //Difference between {the amount of tokens of that same type already affecting character} and
+                        //{max number of tokens of that type allowed on a character (i.e.capacity)} = amount of tokens
+                        //from the incoming list of tokens that can actually be added to the character
+
+                        if (AmountToAdd > 0)
+                        {
+
+                            for (int i = 0; i < AmountToAdd; i++)
+                            {
+                                player.TokensActive[key].Add(TokenElement.Value[i]);
+
+                                TokensAdded.Add(TokenElement.Value[i]);
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        player.TokensActive.Add(key, TokenElement.Value);
+
+                        TokensAdded.AddRange(TokenElement.Value);
+
+                    }
+
+                }
+                else { break; } //If the player already has 4 types of tokens on them, do nothing
+
+            }
+
+
+            return TokensAdded;
+
+        }
 
         public static void ActivateBurnTokens(Player player)
         {
@@ -119,9 +193,12 @@
 
                     damage.DamageValue -= damage.DamageValue / 10;
 
-                    //For each poison token, make caster take 1 poison damage. player damage ignores resistances.
+                    //For each poison token, make caster take 1 poison damage; this damage ignores resistances.
+                    //But because this damage is not being resisted at all, the actual type of damage being
+                    //taken is irrelevant, so I've just used the default constructor for damage here.
 
-                    player.ActiveHp--;
+                    player.TakeDamage(new Damage());
+
                 }
 
                 /*Poison tokens are triggered on every instance of damage dealt by a player. Every time they are

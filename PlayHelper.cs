@@ -122,7 +122,7 @@
 
             if (Card.TokensAppliedCaster != null)
             {
-                List<IToken> AddedTokens = p1.AddTokens(Card.TokensAppliedCaster);
+                List<IToken> AddedTokens = TokenHandler.AddTokens(Card.TokensAppliedCaster, p1);
 
                 foreach (IToken Token in AddedTokens)
                 {
@@ -145,7 +145,7 @@
 
             if (Card.TokensAppliedOpponent != null)
             {
-                List<IToken> AddedTokens = p2.AddTokens(Card.TokensAppliedOpponent);
+                List<IToken> AddedTokens = TokenHandler.AddTokens(Card.TokensAppliedOpponent, p2);
 
                 foreach (IToken Token in AddedTokens)
                 {

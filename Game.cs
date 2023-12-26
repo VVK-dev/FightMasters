@@ -252,7 +252,7 @@ namespace FightMasters
 
             //Get player's choice and either pass turn or play card
 
-            int choice = GetChoice(Hand.Length);
+            int choice = GetChoice(Hand, CurrentPlayer);
 
             if (choice == Hand.Length) { 
                 
@@ -319,19 +319,19 @@ namespace FightMasters
         }
 
         //Method to get a player's choice from their hand
-        private static int GetChoice(int HandLength)
+        private static int GetChoice(ICard[] Hand, Player CurrentPlayer)
         {
 
             Console.WriteLine("Enter a number from those above to indicate how you choose to play: ");
 
             int choice = Console.Read();
 
-            if(choice <= 0 || choice > HandLength)
+            if((choice < 1) || (choice > Hand.Length) || (Hand[choice - 1].StaminaCost > CurrentPlayer.CurrentStamina))
             {
 
                 Console.WriteLine("Invalid choice. Please try again.");
 
-                return GetChoice(HandLength);
+                return GetChoice(Hand, CurrentPlayer);
             }
 
             return choice;

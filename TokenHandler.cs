@@ -19,28 +19,29 @@
 
                     string key = TokenElement.Key;
 
+                    //A token of a particular type has a limit on how many times it can be applied on to a player
+
+                    int capacity = 0;
+
+                    switch (key)
+                    {
+                        case "<B>":
+                            capacity = BurnToken.Capacity; break;
+                        case "<S>":
+                            capacity = ShockToken.Capacity; break;
+                        case "<C>":
+                            capacity = ChillToken.Capacity; break;
+                        case "<P>":
+                            capacity = PoisonToken.Capacity; break;
+                        case "</>":
+                            capacity = DodgeToken.Capacity; break;
+                        case "<+>":
+                            capacity = BlockToken.Capacity; break;
+
+                    }
+
                     if (player.TokensActive.ContainsKey(key))
                     {
-                        //A token of a particular type has a limit on how many times it can be applied on to a player
-
-                        int capacity = 0;
-
-                        switch (key)
-                        {
-                            case "<B>":
-                                capacity = BurnToken.Capacity; break;
-                            case "<S>":
-                                capacity = ShockToken.Capacity; break;
-                            case "<C>":
-                                capacity = ChillToken.Capacity; break;
-                            case "<P>":
-                                capacity = PoisonToken.Capacity; break;
-                            case "</>":
-                                capacity = DodgeToken.Capacity; break;
-                            case "<+>":
-                                capacity = BlockToken.Capacity; break;
-
-                        }
 
                         int AmountToAdd = player.TokensActive[key].Count - capacity;
                         //Difference between {the amount of tokens of that same type already affecting character} and
@@ -64,7 +65,23 @@
                     else
                     {
 
-                        player.TokensActive.Add(key, TokenElement.Value);
+                        //If player does not already have tokens of a ceratin type active on them, add {key
+                        //, an empty list of ITokens with a capactiy of the max. num of such tokens that
+                        //can be placed on a player + 1} to the player's list of active tokens.
+
+                        //This is done so that the "grow" method of List is never called, thus preventing
+                        //slowdowns
+
+                        player.TokensActive.Add(key, new List<IToken>(capacity + 1));
+
+                        foreach (IToken CurrentToken in TokenElement.Value)
+                        {
+                            //Then add all incoming tokens of the same type to the list
+
+                            player.TokensActive[key].Add(CurrentToken);
+                            
+                        }
+
 
                         TokensAdded.AddRange(TokenElement.Value);
 
@@ -150,6 +167,10 @@
                 //Revert player resistance after token removal
 
                 player.Resistances["Lightning"] += 20;
+
+                //If there are no more Shock tokens left, remove the Shock key
+
+                if (player.TokensActive["<S>"].Count == 0) { player.TokensActive.Remove("<S>"); }
 
 
             }

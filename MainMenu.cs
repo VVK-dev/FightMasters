@@ -9,11 +9,19 @@ namespace FightMasters
     public abstract class MainMenu
     {
 
+        public static void Main()
+        {
+
+            Console.WriteLine(@"//////////>>> FIGHTMASTERS <<<\\\\\\\\\\\\\");
+
+            Console.WriteLine();
 
 
 
 
 
+
+        }
 
     }
 }

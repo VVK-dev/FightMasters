@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using static FightMasters.NeutralCards;
 using static FightMasters.PlayHelper;
 
 namespace FightMasters
@@ -68,6 +69,42 @@ namespace FightMasters
 
             this.CurrentSummons = Array.Empty<IMinion>();
             this.Deck = new Queue<ICard>();
+        }
+
+        //Method for player to draw 5 cards from their deck - their "hand"
+
+        public ICard[] GetHand()
+        {
+            //Take 5 cards from deck
+
+            ICard[] hand = new ICard[5];
+
+            for (int i = 0; i < 5; i++)
+            {
+                bool deckcheck = this.Deck.TryDequeue(out ICard? DequeuedCard);
+
+                if (deckcheck)
+                {
+                    hand[i] = DequeuedCard!; //DequeuedCard will only be null if deckcheck is false
+
+                }
+                else
+                {
+
+                    //If the deck is empty, fill the rest of the hand with dummy cards
+
+                    for (int j = i; j < hand.Length; j++)
+                    {
+                        hand[j] = new Dummy();
+                    }
+
+                    break;
+                }
+
+            }
+
+            return hand;
+
         }
 
         //DAMAGE METHODS

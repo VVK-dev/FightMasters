@@ -218,10 +218,10 @@ namespace FightMasters
                 //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
-                Turn(Player1, Player2, GetHand(Player1));
+                Turn(Player1, Player2, Player1.GetHand());
 
                 //Player 2's turn
-                Turn(Player2, Player1, GetHand(Player2));
+                Turn(Player2, Player1, Player2.GetHand());
 
                 rounds++;
             }
@@ -280,9 +280,10 @@ namespace FightMasters
             //After card is played, set that index to dummy as it is not longer playable
             Hand[choice] = new Dummy();
 
-            if(CurrentPlayer.CurrentStamina > Hand.Min(Card => Card.StaminaCost))
+            //If the player has enough stamina to still play at least 1 card from their hand, their turn continues
+
+            if (CurrentPlayer.CurrentStamina > Hand.Min(Card => Card.StaminaCost))
             {
-                //If the player has enough stamina to still play at least 1 card from their hand, their turn continues
 
                 //Recurse the Turn method but remove the dummy card from their hand
                 Turn(CurrentPlayer, Opponent, Hand.Where(Card => Card is not Dummy).ToArray());
@@ -292,40 +293,6 @@ namespace FightMasters
                 return;
 
             }
-
-        }
-
-        //Method to get 5 cards from the player's deck - their "hand"
-        private static ICard[] GetHand(Player player)
-        {
-            //Take 5 cards from deck
-
-            ICard[] hand = new ICard[5];
-
-            for (int i = 0; i < 5; i++)
-            {
-                bool deckcheck = player.Deck.TryDequeue(out ICard? DequeuedCard);
-
-                if (deckcheck)
-                {
-                    hand[i] = DequeuedCard!; //DequeuedCard will only be null if deckcheck is false
-
-                }
-                else {
-
-                    //If the deck is empty, fill the rest of the hand with dummy cards
-
-                    for (int j = i; j < hand.Length; j++)
-                    {
-                        hand[j] = new Dummy();
-                    }
-
-                    break;
-                }
-
-            }
-
-            return hand;
 
         }
 

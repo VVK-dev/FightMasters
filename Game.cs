@@ -1,4 +1,5 @@
-﻿using static FightMasters.NeutralCards;
+﻿using System.ComponentModel;
+using static FightMasters.NeutralCards;
 using static FightMasters.VikingCards;
 
 namespace FightMasters
@@ -182,19 +183,19 @@ namespace FightMasters
             while (rounds <= 15)
             {
 
-                //Check win/draw conditions
-
-                CheckWinCons();
-
-                //If win conditions are not satisfied, continue match:
-
                 //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
                 Turn(Player1, Player2, Player1.GetHand());
+                
+                //Check win/draw conditions
+                CheckWinCons();
 
                 //Player 2's turn
                 Turn(Player2, Player1, Player2.GetHand());
+                
+                //Check win/draw conditions
+                CheckWinCons();
 
                 rounds++;
             }
@@ -244,11 +245,28 @@ namespace FightMasters
 
             TokenHandler.ActivateChillTokens(CurrentPlayer);
 
+            //Deactivate persistent card effects
+
+            for (int i = CurrentPlayer.PersistentCards.Count; i > 0; i--)
+            {
+
+                CurrentPlayer.PersistentCards[i].DeactivateEffects(CurrentPlayer, Opponent); 
+
+
+            }
+
             //Player loses stamina for this turn if they successfully dodged last turn
             CurrentPlayer.CurrentStamina -= CurrentPlayer.DodgeCounter;
             CurrentPlayer.DodgeCounter = 0;
 
             Console.WriteLine(CurrentPlayer);
+
+            PlayCards(CurrentPlayer, Opponent, Hand);
+
+        }
+
+        private static void PlayCards(Player CurrentPlayer, Player Opponent, ICard[] Hand)
+        {
 
             //Loop through and print cards
 
@@ -270,30 +288,35 @@ namespace FightMasters
 
             int choice = GetChoice(Hand, CurrentPlayer);
 
-            if (choice == Hand.Length) { 
-                
+            if (choice == Hand.Length)
+            {
+
                 Console.WriteLine($"{CurrentPlayer.PlayerName} chooses to pass this turn.");
                 EndTurn(Hand, CurrentPlayer, Opponent);
-                return; 
-            
+                return;
+
             }
-            
+
             //If player chooses not to pass, play card chosen
 
             Hand[choice].Play(CurrentPlayer, Opponent);
 
-            if (Hand[choice].HasDeactivate) { }
-            
+            //If the card played has some persistent effect thatneeds to be deactivated after a while, add it
+            //to the list of such cards
+
+            if (Hand[choice].HasDeactivate) { CurrentPlayer.PersistentCards.Add(Hand[choice]); }
+
             //After card is played, set that index to dummy as it is not longer playable
             Hand[choice] = new Dummy();
 
-            //If the player has enough stamina to still play at least 1 card from their hand, their turn continues
+            //If the player has enough stamina to still play at least 1 card from their hand, their turn
+            //continues
 
             if (CurrentPlayer.CurrentStamina > Hand.Min(Card => Card.StaminaCost))
             {
 
-                //Recurse the Turn method but remove the dummy card from their hand
-                Turn(CurrentPlayer, Opponent, Hand.Where(Card => Card is not Dummy).ToArray());
+                //Recurse, but remove the dummy card from their hand
+                PlayCards(CurrentPlayer, Opponent, Hand.Where(Card => Card is not Dummy).ToArray());
 
                 EndTurn(Hand, CurrentPlayer, Opponent);
 

@@ -251,11 +251,14 @@
             public string DeactivateEffects(Player p1, Player p2)
             {
 
-                string DeactivateSummary = "The effects of the Lesser Frost Shield wear off, reducing your physical and " +
-                    "frost resistances by 20.";
+                //This card's effects last until the start of the player's next turn.
+
+                string DeactivateSummary = "The effects of the Lesser Frost Shield wear off, reducing your physical and frost resistances by 20.";
 
                 p1.Resistances["Frost"] -= 20;
                 p1.Resistances["Physical"] -= 20;
+
+                p1.PersistentCards.Remove(this);
 
                 return DeactivateSummary;
 

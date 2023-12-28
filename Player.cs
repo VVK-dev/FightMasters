@@ -90,22 +90,23 @@ namespace FightMasters
         public Damage BeforeDealingDamage(Damage IncomingDamage, Player opponent)
         {
 
-                //Calculate incoming damage after accounting for resistances
+            //Calculate incoming damage after accounting for resistances
 
-                IncomingDamage = CalculateDamage(IncomingDamage, opponent);
+            IncomingDamage = CalculateDamage(IncomingDamage, opponent);
 
-                //Invoke OnDealDamageCardEffects event to call any methods that might trigger before final
-                //damage is dealt
+            //Invoke OnDealDamageCardEffects event to call any methods that might trigger before final
+            //damage is dealt
 
-                Damage? EventResult = this.OnDealDamageCardEffects?.Invoke((this, IncomingDamage)); 
+            Damage? EventResult = this.OnDealDamageCardEffects?.Invoke((this, IncomingDamage)); 
 
-                if (EventResult != null)
-                {
+            if (EventResult != null)
+            {
 
-                    IncomingDamage = EventResult;
+                IncomingDamage = EventResult;
 
-                }
+            }
 
+            this.OnDealDamageCardEffects = null;
 
             return IncomingDamage;
 

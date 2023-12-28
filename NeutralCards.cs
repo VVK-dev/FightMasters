@@ -278,8 +278,7 @@
 
             public string Name { get; } = "Boulder Toss";
 
-            public string Description { get; } = "Push your hands into the ground and grab as hard as you can, pulling a " +
-                "massive boulder from the earth beneath you and fling it at your opponent dealing 12 physical damage if it hits.";
+            public string Description { get; } = "Push your hands into the ground and grab as hard as you can, pulling a massive boulder from the earth beneath you and fling it at your opponent dealing 12 physical damage if it hits.";
 
             public int StaminaCost { get; } = 6;
 

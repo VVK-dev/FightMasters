@@ -28,8 +28,11 @@ namespace FightMasters
         internal int DodgeCounter { get; set; } = 0; 
         //Stamina is reduced next turn equal to the number of times a player has dodged this turn
 
-        public event Func<(Player, Damage), Damage>? OnDealDamageCardEffects; 
+        public event Func<(Player, Damage), Damage>? OnDealDamageCardEffects;
         //params: opponent, damage value / returns: final damage value
+
+        //List of cards that have a persistent effect that deactivate after some rounds/turns
+        public List<ICard> PersistentCards { get; set; } = new();
 
         //CONSTRUCTORS
 

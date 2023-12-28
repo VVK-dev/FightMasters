@@ -241,6 +241,8 @@ namespace FightMasters
             CurrentPlayer.CurrentStamina = CurrentPlayer.ActiveCharClass.MaxStamina;
 
             TokenHandler.ActivateBurnTokens(CurrentPlayer);
+
+            //Check if burn tokens killed player
             CheckWinCons();
 
             TokenHandler.ActivateChillTokens(CurrentPlayer);

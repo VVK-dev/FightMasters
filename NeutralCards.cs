@@ -96,17 +96,23 @@
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
+                (string PlaySummary, bool[] DamageDodged) = PlayHelper.DamagePlayer(this, p1, p2);
 
                 //Zap has a 30% chance to apply a shock token to the target
 
-                Random random = new();
+                if (!DamageDodged[0]) {
+                
+                    //If damage isn't dodged, chance to apply shock token
 
-                if (random.Next(1, 10) <= 3)
-                {
+                    Random random = new();
 
-                    PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
+                    if (random.Next(1, 10) <= 3)
+                    {
 
+                        PlaySummary += "The attack has lingering effects...";
+                        PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
+
+                    }
                 }
 
                 return PlaySummary;
@@ -167,11 +173,17 @@
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
+                (string PlaySummary, bool[] DamageDodged) = PlayHelper.DamagePlayer(this, p1, p2);
 
-                //Dragon Breath applies a Burn token to the target
+                //Dragon Breath applies a Burn token to the target if damage is not dodged
 
-                PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
+                if (!DamageDodged[0])
+                {
+
+                    PlaySummary += "The emblazoned atmosphere leaves its mark...";
+                    PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
+
+                }
 
                 return PlaySummary;
 
@@ -291,7 +303,7 @@
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
+                (string PlaySummary, _) = PlayHelper.DamagePlayer(this, p1, p2);
 
                 return PlaySummary;
 

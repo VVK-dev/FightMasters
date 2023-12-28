@@ -10,11 +10,13 @@
 
         //Method to deal damage only
 
-        public static string DamagePlayer(dynamic Item, Player p1, Player p2)
+        public static (string, bool[]) DamagePlayer(dynamic Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
             bool IsCard = ObjCheck(Item);
+
+            bool[] DamageDodged = new bool[Item.DamageDealt.Length];
 
             Span<Damage> DamageSpan = new (Item.DamageDealt);
 
@@ -43,9 +45,12 @@
                         PlayDamageSummary += $"{p2.PlayerName} dodges the incoming {CurrentDamage} " +
                             $"damage. ";
 
+                        DamageDodged[i] = true;
+
                         continue; //If this instance of damage is dodged, move to next instance
 
                     }
+                    else { DamageDodged[i] = false; }
 
                     //Check for poison tokens on player 1
 
@@ -89,7 +94,7 @@
 
             }
 
-            return PlayDamageSummary;
+            return (PlayDamageSummary, DamageDodged);
 
         }
 

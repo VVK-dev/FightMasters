@@ -14,6 +14,8 @@ namespace FightMasters
 
         public Queue<ICard> Deck { get; set; }
 
+        public ICard[] Hand = new ICard[5];
+
         public int ActiveHp { get; set; }
 
         public int CurrentStamina { get; set; }
@@ -76,11 +78,9 @@ namespace FightMasters
 
         //Method for player to draw 5 cards from their deck - their "hand"
 
-        public ICard[] GetHand()
+        public void GetNewHand()
         {
             //Take 5 cards from deck
-
-            ICard[] hand = new ICard[5];
 
             for (int i = 0; i < 5; i++)
             {
@@ -88,7 +88,8 @@ namespace FightMasters
 
                 if (deckcheck)
                 {
-                    hand[i] = DequeuedCard!; //DequeuedCard will only be null if deckcheck is false
+                    
+                    this.Hand[i] = DequeuedCard!; //DequeuedCard will only be null if deckcheck is false
 
                 }
                 else
@@ -96,9 +97,9 @@ namespace FightMasters
 
                     //If the deck is empty, fill the rest of the hand with dummy cards
 
-                    for (int j = i; j < hand.Length; j++)
+                    for (int j = i; j < this.Hand.Length; j++)
                     {
-                        hand[j] = new Dummy();
+                        this.Hand[j] = new Dummy();
                     }
 
                     break;
@@ -106,7 +107,7 @@ namespace FightMasters
 
             }
 
-            return hand;
+            return;
 
         }
 

@@ -186,13 +186,13 @@ namespace FightMasters
                 //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
-                Turn(Player1, Player2, Player1.GetHand());
+                Turn(Player1, Player2);
                 
                 //Check win/draw conditions
                 CheckWinCons();
 
                 //Player 2's turn
-                Turn(Player2, Player1, Player2.GetHand());
+                Turn(Player2, Player1);
                 
                 //Check win/draw conditions
                 CheckWinCons();
@@ -233,7 +233,7 @@ namespace FightMasters
         }
 
         //Turn method
-        private static void Turn(Player CurrentPlayer, Player Opponent, ICard[] Hand)
+        private static void Turn(Player CurrentPlayer, Player Opponent)
         {
 
             //Call activate token methods and calculate stamina for this turn
@@ -260,12 +260,20 @@ namespace FightMasters
 
             Console.WriteLine(CurrentPlayer);
 
-            PlayCards(CurrentPlayer, Opponent, Hand);
+            //Current player draws a new hand
+            CurrentPlayer.GetNewHand();
+
+            PlayCards(CurrentPlayer, Opponent);
+
+            EndTurn(CurrentPlayer, Opponent);
+
 
         }
 
-        private static void PlayCards(Player CurrentPlayer, Player Opponent, ICard[] Hand)
+        private static void PlayCards(Player CurrentPlayer, Player Opponent)
         {
+
+            Span<ICard> Hand = CurrentPlayer.Hand;
 
             //Loop through and print cards
 
@@ -285,13 +293,13 @@ namespace FightMasters
 
             //Get player's choice and either pass turn or play card
 
-            int choice = GetChoice(Hand, CurrentPlayer);
+            int choice = GetChoice(CurrentPlayer);
 
             if (choice == Hand.Length)
             {
 
                 Console.WriteLine($"{CurrentPlayer.PlayerName} chooses to pass this turn.");
-                EndTurn(Hand, CurrentPlayer, Opponent);
+                EndTurn(CurrentPlayer, Opponent);
                 return;
 
             }
@@ -311,13 +319,14 @@ namespace FightMasters
             //If the player has enough stamina to still play at least 1 card from their hand, their turn
             //continues
 
-            if (CurrentPlayer.CurrentStamina > Hand.Min(Card => Card.StaminaCost))
+            if (CurrentPlayer.CurrentStamina > CurrentPlayer.Hand.Min(Card => Card.StaminaCost))
             {
 
                 //Recurse, but remove the dummy card from their hand
-                PlayCards(CurrentPlayer, Opponent, Hand.Where(Card => Card is not Dummy).ToArray());
 
-                EndTurn(Hand, CurrentPlayer, Opponent);
+                CurrentPlayer.Hand = CurrentPlayer.Hand.Where(Card => Card is not Dummy).ToArray();
+
+                PlayCards(CurrentPlayer, Opponent);
 
                 return;
 
@@ -326,19 +335,19 @@ namespace FightMasters
         }
 
         //Method to get a player's choice from their hand
-        private static int GetChoice(ICard[] Hand, Player CurrentPlayer)
+        private static int GetChoice(Player CurrentPlayer)
         {
 
             Console.WriteLine("Enter a number from those above to indicate how you choose to play: ");
 
             int choice = Console.Read();
 
-            if((choice < 1) || (choice > Hand.Length) || (Hand[choice - 1].StaminaCost > CurrentPlayer.CurrentStamina))
+            if ((choice < 1) || (choice > CurrentPlayer.Hand.Length) || (CurrentPlayer.Hand[choice - 1].StaminaCost > CurrentPlayer.CurrentStamina))
             {
 
                 Console.WriteLine("Invalid choice. Please try again.");
 
-                return GetChoice(Hand, CurrentPlayer);
+                return GetChoice(CurrentPlayer);
             }
 
             return choice;
@@ -348,11 +357,11 @@ namespace FightMasters
         /*END OF TURN METHODS*/
 
         //Method to call actions that occur at the end of a player's turn
-        private static void EndTurn(ICard[] Hand, Player CurrentPlayer, Player Opponent)
+        private static void EndTurn(Player CurrentPlayer, Player Opponent)
         {
 
             PlaySummons(CurrentPlayer, Opponent);
-            ReQueue(Hand, CurrentPlayer);
+            ReQueue(CurrentPlayer);
 
         }
 
@@ -387,12 +396,12 @@ namespace FightMasters
         }
 
         //Method to add unplayed cards from the player's hand back to their deck
-        private static void ReQueue(ICard[] Hand, Player CurrentPlayer)
+        private static void ReQueue(Player CurrentPlayer)
         {
 
-            for (int i = 0; i < Hand.Length; i++)
+            for (int i = 0; i < CurrentPlayer.Hand.Length; i++)
             {
-                CurrentPlayer.Deck.Enqueue(Hand[i]);
+                CurrentPlayer.Deck.Enqueue(CurrentPlayer.Hand[i]);
 
             }
 

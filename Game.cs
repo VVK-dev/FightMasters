@@ -250,8 +250,7 @@ namespace FightMasters
             for (int i = CurrentPlayer.PersistentCards.Count; i > 0; i--)
             {
 
-                Console.WriteLine(CurrentPlayer.PersistentCards[i].DeactivateEffects(CurrentPlayer, Opponent)); 
-
+                Console.WriteLine(CurrentPlayer.PersistentCards[i].DeactivateEffects(CurrentPlayer, Opponent));
 
             }
 

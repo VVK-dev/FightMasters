@@ -44,7 +44,7 @@
 
                 p2.Resistances["Physical"] -= 20;
 
-                string PlaySummary = PlayHelper.DamagePlayer(this, p1, p2);
+                (string PlaySummary, _) = PlayHelper.DamagePlayer(this, p1, p2);
 
                 p2.Resistances["Physical"] += 20;
 
@@ -74,7 +74,7 @@
 
             public string Name { get; } = "Ice Armour";
 
-            public string Description { get; } = "Gain 2 block tokens. Apply a chill token to your opponent.";
+            public string Description { get; } = "Gain 2 block tokens. Apply 2 chill tokens to your opponent the next time they attack you.";
 
             public int StaminaCost { get; } = 4;
 
@@ -82,13 +82,13 @@
 
             public int Heal { get; } = 0;
 
-            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = new() {
 
-            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = new() {
-
-                { "<C>", new List<IToken>() { new ChillToken() } }
+                { "<+>", new List<IToken>() { new BlockToken(), new BlockToken() } }
 
             };
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
 
             public IMinion[]? Summons { get; } = null;
 
@@ -105,9 +105,26 @@
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string TokenSummary = PlayHelper.AddOpponentTokens(this, p2);
+                string TokenSummary = PlayHelper.AddCasterTokens(this, p2);
+
+                p2.OnDealDamageCardEffects += OnOpponentDamage;
 
                 return TokenSummary;
+
+            }
+
+            private static Damage OnOpponentDamage((Player p2, Damage d) input)
+            {
+
+                Dictionary<string, List<IToken>> ChillTokens = new() {
+                
+                    { "<+>", new List<IToken>() { new ChillToken(), new ChillToken() } } 
+                
+                };
+
+                TokenHandler.AddTokens(ChillTokens, input.p2);
+
+                return input.d;
 
             }
 
@@ -126,20 +143,6 @@
             }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

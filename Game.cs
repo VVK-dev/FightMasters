@@ -182,36 +182,9 @@ namespace FightMasters
             while (rounds <= 15)
             {
 
-                //Win conditions
+                //Check win/draw conditions
 
-                if ((Player1.ActiveHp == Player2.ActiveHp) && (Player1.ActiveHp < 1))
-                {
-
-                    Console.WriteLine("\n === DRAW! === \n");
-
-                    /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
-
-                    return;
-                }
-
-                if (Player1.ActiveHp < 1) { 
-                    
-                    Console.WriteLine("\n === PLAYER 2 WINS! === \n");
-
-                    /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
-
-                    return;
-                }
-
-                if (Player2.ActiveHp < 1)
-                {
-                    Console.WriteLine("\n === PLAYER 1 WINS! === \n");
-
-                    /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
-
-                    return;
-                }
-
+                CheckWinCons();
 
                 //If win conditions are not satisfied, continue match:
 
@@ -228,6 +201,36 @@ namespace FightMasters
 
         }
 
+        private static void CheckWinCons()
+        {
+
+            if ((Player1.ActiveHp == Player2.ActiveHp) && (Player1.ActiveHp < 1))
+            {
+
+                Console.WriteLine("\n === DRAW! === \n");
+
+            }
+
+            if (Player1.ActiveHp < 1)
+            {
+
+                Console.WriteLine("\n === PLAYER 2 WINS! === \n");
+
+            }
+
+            if (Player2.ActiveHp < 1)
+            {
+
+                Console.WriteLine("\n === PLAYER 1 WINS! === \n");
+
+            }
+
+            /*TO DO: SHOW MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
+
+            return;
+
+        }
+
         //Turn method
         private static void Turn(Player CurrentPlayer, Player Opponent, ICard[] Hand)
         {
@@ -237,6 +240,8 @@ namespace FightMasters
             CurrentPlayer.CurrentStamina = CurrentPlayer.ActiveCharClass.MaxStamina;
 
             TokenHandler.ActivateBurnTokens(CurrentPlayer);
+            CheckWinCons();
+
             TokenHandler.ActivateChillTokens(CurrentPlayer);
 
             //Player loses stamina for this turn if they successfully dodged last turn
@@ -276,6 +281,8 @@ namespace FightMasters
             //If player chooses not to pass, play card chosen
 
             Hand[choice].Play(CurrentPlayer, Opponent);
+
+            if (Hand[choice].HasDeactivate) { }
             
             //After card is played, set that index to dummy as it is not longer playable
             Hand[choice] = new Dummy();

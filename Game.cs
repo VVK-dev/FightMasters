@@ -299,7 +299,6 @@ namespace FightMasters
             {
 
                 Console.WriteLine($"{CurrentPlayer.PlayerName} chooses to pass this turn.");
-                EndTurn(CurrentPlayer, Opponent);
                 return;
 
             }

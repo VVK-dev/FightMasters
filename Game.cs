@@ -252,6 +252,7 @@ namespace FightMasters
 
                 Console.WriteLine(CurrentPlayer.PersistentCards[i].DeactivateEffects(CurrentPlayer, Opponent)); 
 
+
             }
 
             //Player loses stamina for this turn if they successfully dodged last turn

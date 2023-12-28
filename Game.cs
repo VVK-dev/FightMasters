@@ -184,7 +184,17 @@ namespace FightMasters
 
                 //Win conditions
 
-                if(Player1.ActiveHp < 1) { 
+                if ((Player1.ActiveHp == Player2.ActiveHp) && (Player1.ActiveHp < 1))
+                {
+
+                    Console.WriteLine("\n === DRAW! === \n");
+
+                    /*TO DO: ADD MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
+
+                    return;
+                }
+
+                if (Player1.ActiveHp < 1) { 
                     
                     Console.WriteLine("\n === PLAYER 2 WINS! === \n");
 
@@ -201,6 +211,7 @@ namespace FightMasters
 
                     return;
                 }
+
 
                 //If win conditions are not satisfied, continue match:
 

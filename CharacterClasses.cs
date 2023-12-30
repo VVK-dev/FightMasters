@@ -23,12 +23,12 @@
 
             { "Viking" , new Dictionary<string, string[]>()
                 {
-                    {"HIGH DAMAGE", new string[]{ "I thought I was the only one of my kind left. I'd like to keep it that way.",
-                        "You call yourself one of my kind, eh? Well, let's see if you're telling the truth." }},
-                    {"MEDIUM DAMAGE", new string[] {"We are not the same. You slay mere men - My axe has tasted the blood of gods.",
-                        "SHATTER!" }},
-                    {"LOW DAMAGE", new string[] {" I wonder if you'll break with just this much, copycat?",
-                        "Whether or not you're my kin, I cannot let you live."}}
+                    {"HIGH DAMAGE", new string[]{ "'I thought I was the only one of my kind left. I'd like to keep it that way.'",
+                        "'You call yourself one of my kind, eh? Well, let's see if you're telling the truth.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'We are not the same. You slay mere men - My axe has tasted the blood of gods.'",
+                        "'SHATTER!'" }},
+                    {"LOW DAMAGE", new string[] {"'I wonder if you'll break with just this much, copycat?'",
+                        "'Whether or not you're my kin, I cannot let you live.'"}}
                 }
             },
 

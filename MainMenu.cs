@@ -14,6 +14,9 @@ namespace FightMasters
 
             Console.WriteLine(@"//////////>>> FIGHTMASTERS <<<\\\\\\\\\\\\\");
 
+            //TO DO: PLAY MATCH, SHOW TOKENS + DESCRIPTION OF EACH, SHOW CLASSES + DESCRIPTION OF EACH
+
+
             Console.WriteLine();
 
 

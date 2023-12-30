@@ -189,13 +189,13 @@ namespace FightMasters
 
             int rounds = 1;
 
-            while (rounds <= 15)
+            while (rounds <= 20)
             {
 
                 //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
-                if(Turn(Player1, Player2)) { return; }
+                if (Turn(Player1, Player2)) { return; }
 
                 //Player 2's turn
                 if (Turn(Player2, Player1)) { return; }
@@ -204,7 +204,32 @@ namespace FightMasters
 
             }
 
+            //If the match goes on for longer than 20 rounds, decide a winner
+
+            Console.WriteLine(OvertimeWinner());
+
         }
+
+        //Method to decide a winner if the match goes past a certain round limit
+        private static string OvertimeWinner()
+        {
+
+            if(Player1.ActiveHp > Player2.ActiveHp)
+            {
+
+                return $"\n === {Player1.PlayerName} WINS! === \n";
+
+            }
+            if (Player2.ActiveHp > Player1.ActiveHp)
+            {
+
+                return $"\n === {Player2.PlayerName} WINS! === \n";
+
+            }
+
+            return "\n === DRAW! === \n";
+        }
+
 
         //Turn method
         private static bool Turn(Player CurrentPlayer, Player Opponent)
@@ -266,7 +291,7 @@ namespace FightMasters
             {
 
                 isMatchOver = true;
-                Console.WriteLine("\n === PLAYER 2 WINS! === \n");
+                Console.WriteLine($"\n === {Player2.PlayerName} WINS! === \n");
 
             }
 
@@ -274,7 +299,7 @@ namespace FightMasters
             {
 
                 isMatchOver = true;
-                Console.WriteLine("\n === PLAYER 1 WINS! === \n");
+                Console.WriteLine($"\n === {Player1.PlayerName} WINS! === \n");
 
             }
 

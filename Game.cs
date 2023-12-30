@@ -195,20 +195,57 @@ namespace FightMasters
                 //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
-                Turn(Player1, Player2); //TO DO: FIX BURN TOKENS CALL TO END MATCH
-
-                //Check win/draw conditions
-                if (CheckWinCons()) { return; }
+                if(Turn(Player1, Player2)) { return; }
 
                 //Player 2's turn
-                Turn(Player2, Player1);
-
-                //Check win/draw conditions
-                if (CheckWinCons()) { return; }
+                if (Turn(Player2, Player1)) { return; }
 
                 rounds++;
 
             }
+
+        }
+
+        //Turn method
+        private static bool Turn(Player CurrentPlayer, Player Opponent)
+        {
+
+            //Call activate token methods and calculate stamina for this turn
+
+            CurrentPlayer.CurrentStamina = CurrentPlayer.ActiveCharClass.MaxStamina;
+
+            TokenHandler.ActivateBurnTokens(CurrentPlayer);
+
+            //Check if burn tokens killed player
+            if (CheckWinCons()) { return true; } //End match if current player is defeated
+
+            TokenHandler.ActivateChillTokens(CurrentPlayer);
+
+            //Deactivate persistent card effects
+
+            for (int i = CurrentPlayer.PersistentCards.Count; i > 0; i--)
+            {
+
+                Console.WriteLine(CurrentPlayer.PersistentCards[i].DeactivateEffects(CurrentPlayer, Opponent));
+
+            }
+
+            //Player loses stamina for this turn if they successfully dodged last turn
+            CurrentPlayer.CurrentStamina -= CurrentPlayer.DodgeCounter;
+            CurrentPlayer.DodgeCounter = 0;
+
+            Console.WriteLine(CurrentPlayer);
+
+            //Current player draws a new hand
+            CurrentPlayer.GetNewHand();
+
+            PlayCards(CurrentPlayer, Opponent);
+
+            EndTurn(CurrentPlayer, Opponent);
+
+            if (CheckWinCons()) { return true; } //End match if current player is defeated
+
+            return false;
 
         }
 
@@ -237,56 +274,19 @@ namespace FightMasters
             {
 
                 isMatchOver = true;
-                Console.WriteLine("\n === PLAYER 1 WINS! === \n");                
+                Console.WriteLine("\n === PLAYER 1 WINS! === \n");
 
             }
 
-            if (isMatchOver)
+            /*if (isMatchOver)
             {
-                /*TO DO: SHOW MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
-            }
+
+                TO DO IN PROTOTYPE 2: SHOW MATCH STATS LIKE TOTAL DMG DEALT, CARDS PLAYED, MINIONS SUMMONED 
+                ETC. AND ADD THEM TO PROFILE STATS
+
+            }*/
 
             return isMatchOver;
-
-        }
-
-        //Turn method
-        private static void Turn(Player CurrentPlayer, Player Opponent)
-        {
-
-            //Call activate token methods and calculate stamina for this turn
-
-            CurrentPlayer.CurrentStamina = CurrentPlayer.ActiveCharClass.MaxStamina;
-
-            TokenHandler.ActivateBurnTokens(CurrentPlayer);
-
-            //Check if burn tokens killed player
-            if (CheckWinCons()) { return; } /* TO DO: FIX THIS TO END MATCH */
-
-            TokenHandler.ActivateChillTokens(CurrentPlayer);
-
-            //Deactivate persistent card effects
-
-            for (int i = CurrentPlayer.PersistentCards.Count; i > 0; i--)
-            {
-
-                Console.WriteLine(CurrentPlayer.PersistentCards[i].DeactivateEffects(CurrentPlayer, Opponent));
-
-            }
-
-            //Player loses stamina for this turn if they successfully dodged last turn
-            CurrentPlayer.CurrentStamina -= CurrentPlayer.DodgeCounter;
-            CurrentPlayer.DodgeCounter = 0;
-
-            Console.WriteLine(CurrentPlayer);
-
-            //Current player draws a new hand
-            CurrentPlayer.GetNewHand();
-
-            PlayCards(CurrentPlayer, Opponent);
-
-            EndTurn(CurrentPlayer, Opponent);
-
 
         }
 

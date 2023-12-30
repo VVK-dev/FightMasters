@@ -142,31 +142,40 @@ namespace FightMasters
         private static Queue<ICard> PopulateDeck(ICharClass playerclass)
         {
 
-            ICard[] Deck = {new Zap(), new DragonBreath(), new LFrostShield(), new BoulderToss() 
-                    /*TO DO : Fill in with remaining cards*/
-            };
+            //Concatenate the base deck of neutral cards with
 
-            Deck = (ICard[]) Deck.Concat(playerclass.ClassCards);
+            ICard[] Deck = (ICard[]) OnOpenSetup.BaseDeck.Concat(playerclass.ClassCards);
 
-            Deck = ShuffleArray(Deck);
+            //Shuffle the deck
 
-            Queue<ICard> FinalDeck = new(Deck);
-
-            return FinalDeck;
+            return new Queue<ICard>(ShuffleArray(Deck));
 
         }
 
-        //Knuth shuffle algorithm to shuffle deck at start of match
+        //Modified Knuth shuffle algorithm to shuffle deck at start of match
         private static ICard[] ShuffleArray(ICard[] array)
         {
             Random random = new();
 
             for (int i = 0; i < array.Length; i++)
             {
-                int j = random.Next(i, array.Length);
+                int j = random.Next(0, array.Length); //select a random index from the array
 
-                // Swap elements at positions i and j
-                (array[j], array[i]) = (array[i], array[j]);
+                int k = random.Next(0, 4); //roll a 4 sided die
+
+                if (k == 0)
+                {
+                    // 25% chance to create a copy of a card
+                    array[j] = array[i];
+
+                }
+                else
+                {
+                    // Swap elements at positions i and j
+                    (array[j], array[i]) = (array[i], array[j]);
+
+                }
+
             }
 
             return array;
@@ -186,28 +195,32 @@ namespace FightMasters
                 //In a single round, there are 2 turns - one for each player
 
                 //Player 1's turn
-                Turn(Player1, Player2);
-                
+                Turn(Player1, Player2); //TO DO: FIX BURN TOKENS CALL TO END MATCH
+
                 //Check win/draw conditions
-                CheckWinCons();
+                if (CheckWinCons()) { return; }
 
                 //Player 2's turn
                 Turn(Player2, Player1);
-                
+
                 //Check win/draw conditions
-                CheckWinCons();
+                if (CheckWinCons()) { return; }
 
                 rounds++;
+
             }
 
         }
 
-        private static void CheckWinCons()
+        private static bool CheckWinCons()
         {
+
+            bool isMatchOver = false;
 
             if ((Player1.ActiveHp == Player2.ActiveHp) && (Player1.ActiveHp < 1))
             {
 
+                isMatchOver = true;
                 Console.WriteLine("\n === DRAW! === \n");
 
             }
@@ -215,6 +228,7 @@ namespace FightMasters
             if (Player1.ActiveHp < 1)
             {
 
+                isMatchOver = true;
                 Console.WriteLine("\n === PLAYER 2 WINS! === \n");
 
             }
@@ -222,13 +236,17 @@ namespace FightMasters
             if (Player2.ActiveHp < 1)
             {
 
-                Console.WriteLine("\n === PLAYER 1 WINS! === \n");
+                isMatchOver = true;
+                Console.WriteLine("\n === PLAYER 1 WINS! === \n");                
 
             }
 
-            /*TO DO: SHOW MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
+            if (isMatchOver)
+            {
+                /*TO DO: SHOW MATCH STATS LIKE TOTAL DMG DEALT, ETC. AND ADD THEM TO PROFILE STATS */
+            }
 
-            return;
+            return isMatchOver;
 
         }
 
@@ -243,7 +261,7 @@ namespace FightMasters
             TokenHandler.ActivateBurnTokens(CurrentPlayer);
 
             //Check if burn tokens killed player
-            CheckWinCons();
+            if (CheckWinCons()) { return; } /* TO DO: FIX THIS TO END MATCH */
 
             TokenHandler.ActivateChillTokens(CurrentPlayer);
 

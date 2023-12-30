@@ -1,7 +1,7 @@
 ﻿namespace FightMasters
 {
 
-    //STORAGE FOR ALL CLASS CARDS
+    //STORAGE FOR ALL CLASS SPECIFIC CARDS
 
     internal class VikingCards
     {

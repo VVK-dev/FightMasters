@@ -8,9 +8,8 @@ namespace FightMasters
     {
 
         static private Player Player1 { get; set; }
-        static private Player Player2 { get; set; }
+        static private Player Player2 { get; set; } //Neither player objects will ever actually be null
 
-        //Neither player objects will ever actually be null
 
         public static void Game()
         {
@@ -229,7 +228,6 @@ namespace FightMasters
 
             return "\n === DRAW! === \n";
         }
-
 
         //Turn method
         private static bool Turn(Player CurrentPlayer, Player Opponent)

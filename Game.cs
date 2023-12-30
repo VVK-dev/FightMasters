@@ -209,27 +209,8 @@ namespace FightMasters
 
         }
 
-        //Method to decide a winner if the match goes past a certain round limit
-        private static string OvertimeWinner()
-        {
-
-            if(Player1.ActiveHp > Player2.ActiveHp)
-            {
-
-                return $"\n === {Player1.PlayerName} WINS! === \n";
-
-            }
-            if (Player2.ActiveHp > Player1.ActiveHp)
-            {
-
-                return $"\n === {Player2.PlayerName} WINS! === \n";
-
-            }
-
-            return "\n === DRAW! === \n";
-        }
-
-        //Turn method
+        //Method that dictates what happens during a player's turn
+        //returns true if a winner has been decided during the current turn, false if not
         private static bool Turn(Player CurrentPlayer, Player Opponent)
         {
 
@@ -272,6 +253,29 @@ namespace FightMasters
 
         }
 
+        //Win condition checking methods
+
+        //Method to decide a winner if the match goes past a certain round limit
+        private static string OvertimeWinner()
+        {
+
+            if (Player1.ActiveHp > Player2.ActiveHp)
+            {
+
+                return $"\n === {Player1.PlayerName} WINS! === \n";
+
+            }
+            if (Player2.ActiveHp > Player1.ActiveHp)
+            {
+
+                return $"\n === {Player2.PlayerName} WINS! === \n";
+
+            }
+
+            return "\n === DRAW! === \n";
+        }
+
+        //Method to decide a winner if either player has <1 hp
         private static bool CheckWinCons()
         {
 
@@ -313,6 +317,7 @@ namespace FightMasters
 
         }
 
+        //Method that displays a player's current hand and plays their card of choice if so chosen
         private static void PlayCards(Player CurrentPlayer, Player Opponent)
         {
 
@@ -376,7 +381,7 @@ namespace FightMasters
 
         }
 
-        //Method to get a player's choice from their hand
+        //Get a player's choice of card from their hand
         private static int GetChoice(Player CurrentPlayer)
         {
 

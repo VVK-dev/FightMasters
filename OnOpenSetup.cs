@@ -13,10 +13,10 @@ namespace FightMasters
                                                             //neutral card objects are created once and
                                                             //stored in this array.
 
-        public static void Setup()
+        public static bool Setup()
         {
 
-            //Checking if necessary files exist:
+            bool isAllGood = true;
 
             //U stands for unknown, M for missing, C for corrupt and G for good
 
@@ -32,9 +32,41 @@ namespace FightMasters
 
             FileCondition = FileCorruptionCheck(FileExistenceCheck(FileCondition));
 
+            if(FileCondition.ContainsValue("M"))
+            {
+
+                isAllGood = false;
+
+                Console.WriteLine("The following files are missing:");
+
+                Console.WriteLine(FileCondition.Keys.Where(Key => FileCondition[Key] == "M"));
+
+            }
+
+            if (FileCondition.ContainsValue("C"))
+            {
+
+                isAllGood = false;
+
+                Console.WriteLine("The following files are corrupted:");
+
+                Console.WriteLine(FileCondition.Keys.Where(Key => FileCondition[Key] == "C"));
+
+            }
+
+            if (FileCondition.ContainsValue("U"))
+            {
+
+                isAllGood = false;
+
+                Console.WriteLine("The following files may be either missing or corrupted:");
+
+                Console.WriteLine(FileCondition.Keys.Where(Key => FileCondition[Key] == "U"));
+
+            }
 
 
-
+            return isAllGood; //If all checks passed, return true
         }
 
         private static Dictionary<string,string> FileExistenceCheck(Dictionary<string,string> FileCondition) {

@@ -64,8 +64,7 @@
 
             public string Name { get; } = "Zap";
 
-            public string Description { get; } = "Shoot a bolt of lightning from your fingertips, dealing 5 lightning " +
-                "damage to your target. Has a 30% chance to Shock the target.";
+            public string Description { get; } = "Shoot a bolt of lightning from your fingertips, dealing 4 lightning damage to your target. Has a 30% chance to Shock the target.";
 
             public int StaminaCost { get; } = 3;
 
@@ -142,8 +141,7 @@
 
             public string Name { get; } = "Dragon Breath";
 
-            public string Description { get; } = "Transform your head into that of a dragon and take a deep " +
-                "breath, releasing hot lava as you exhale dealing 5 fire damage and applying a Burn token to your target.";
+            public string Description { get; } = "Transform your head into that of a dragon and take a deep breath, releasing hot lava as you exhale dealing 5 fire damage and applying a Burn token to your target.";
 
             public int StaminaCost { get; } = 4;
 
@@ -318,6 +316,46 @@
 
                 return string.Empty;
 
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
+            }
+
+        }
+
+        internal class SummonWolf : ICard
+        {
+            public string Name { get; } = "Summon Wolf";
+
+            public string Description { get; } = "Summon a wolf to fight by your side for 3 turns. It takes up 1 summon slot. It deals 2 damage per turn and reduces your opponent's physical resistance by 1% everytime it attacks (their resistance goes back to normal after the wolf is unsummoned). If you have atleast 3 wolves, they form a wolf pack, causing each to deal 1 extra damage per turn. This effect also makes the physical resistance they shred from your opponent permanent for the rest if the match (including the resistance shredded until that point). Anytime a wolf is added to the pack, each wolf's duration is increased by 1.";
+
+            public int StaminaCost { get; } = 3;
+
+            public Damage[] DamageDealt { get; } = { new Damage("Physical", 2) };
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
+
+            public IMinion[]? Summons { get; } = { new NeutralMinions.Wolf()};
+
+            public bool HasDeactivate { get; } = false;
+
+            public string Play(Player p1, Player p2)
+            {
+
+                return PlayHelper.SummonMinions(this, p1);
+            
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+                //Has no effects to deactivate
+                return string.Empty;
             }
 
             public override string ToString()

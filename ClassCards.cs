@@ -146,4 +146,18 @@
 
     }
 
+    internal class HeraldCards { }
+
+    internal class RotcherCards { }
+
+    internal class DruidCards
+    {
+
+        
+
+
+
+
+    }
+
 }

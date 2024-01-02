@@ -300,7 +300,7 @@
     public class Druid : ICharClass
     {
 
-        //Phys/lightning damage based mage summoner
+        //Summoner-Mage
 
         public string ClassName { get; } = "Druid";
         public int HealthPoints { get; } = 80;
@@ -311,7 +311,8 @@
         public int LightningResistance { get; } = 10;
         public int PoisonResistance { get; } = 8;
         public int SummonSlots { get; } = 4;
-        public ICard[] ClassCards { get; } = {  new NeutralCards.SummonWolf() /*TODO: Fill this in once cards are made*/};
+        public ICard[] ClassCards { get; } = { new NeutralCards.SummonWolf() /*TODO: Fill this in once cards are made*/};
+
         //Although Summon wolf is a neutral card, the druid gets an extra copy of it as a class card
 
         public Dictionary<string, Dictionary<string, string[]>> OnDealDamageVoiceLines { get; } =

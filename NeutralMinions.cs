@@ -61,14 +61,15 @@
                     }
 
                 }
-
+              
                 //Deal damage
 
                 (ActSummary, bool[] dodged) = PlayHelper.DamagePlayer(this, p1, p2);
 
                 //If opponent hasn't dodged attack, reduce their physical resistance by 1%
 
-                if (!dodged[0]) {
+                if (!dodged[0])
+                {
 
                     if (isFirstTurn) { this.OpponentInitialPhysResist = p2.Resistances["Physical"]; isFirstTurn = false; }
 
@@ -77,7 +78,8 @@
 
                 }
 
-                if((this.Duration == 1)) {
+                if ((this.Duration == 1))
+                {
 
                     if (!isWolfPack)
                     {
@@ -103,7 +105,7 @@
             }
 
         }
-        
+
     }
 
 }

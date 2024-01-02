@@ -117,9 +117,9 @@
             {
 
                 Dictionary<string, List<IToken>> ChillTokens = new() {
-                
-                    { "<+>", new List<IToken>() { new ChillToken(), new ChillToken() } } 
-                
+
+                    { "<+>", new List<IToken>() { new ChillToken(), new ChillToken() } }
+
                 };
 
                 TokenHandler.AddTokens(ChillTokens, input.p2);
@@ -150,14 +150,6 @@
 
     internal class RotcherCards { }
 
-    internal class DruidCards
-    {
-
-        
-
-
-
-
-    }
+    internal class DruidCards { }
 
 }

@@ -75,9 +75,9 @@
             public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
 
             public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = new() {
-                
+
                 { "<S>", new List<IToken>() { new ShockToken() } }
-            
+
             };
 
             public IMinion[]? Summons { get; } = null;
@@ -99,8 +99,9 @@
 
                 //Zap has a 30% chance to apply a shock token to the target
 
-                if (!DamageDodged[0]) {
-                
+                if (!DamageDodged[0])
+                {
+
                     //If damage isn't dodged, chance to apply shock token
 
                     Random random = new();
@@ -341,7 +342,7 @@
 
             public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
 
-            public IMinion[]? Summons { get; } = { new NeutralMinions.Wolf()};
+            public IMinion[]? Summons { get; } = { new NeutralMinions.Wolf() };
 
             public bool HasDeactivate { get; } = false;
 
@@ -349,7 +350,6 @@
             {
 
                 return PlayHelper.SummonMinions(this, p1);
-            
             }
 
             public string DeactivateEffects(Player p1, Player p2)

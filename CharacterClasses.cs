@@ -43,8 +43,8 @@
             { "Herald", new Dictionary<string, string[]>()
                 {
                     {"HIGH DAMAGE", new string[]{ "'Forgive me. May your soul find peace in the afterlife.'", "'You made me do this. Face the consequences.'" }},
-                    {"MEDIUM DAMAGE", new string[] { "'Give up. I'd rather you surrender than me strike you down. Don't make me hurt you.'", "'Don't make this worse on yourself, friend.'" }},
-                    {"LOW DAMAGE", new string[] {"'What happened to you, friend? Why make me do this?'", "'May your soul keep you warm at the end of the world.'"}}
+                    {"MEDIUM DAMAGE", new string[] { "'Give up. I'd rather you surrender than me strike you down.'", "'We we friends once. Don't make me hurt you.'" }},
+                    {"LOW DAMAGE", new string[] {"'You've forced my hand.'", "'May your soul keep you warm at the end of the world.'"}}
                 }
             },
 
@@ -80,7 +80,7 @@
                 {
                     {"HIGH DAMAGE", new string[]{"'You've... made me bleed... I didn't think I still could...'", " "}},
                     {"MEDIUM DAMAGE", new string[] {"'Your flame...*cough*... still burns strong I see. Good.'"}},
-                    {"LOW DAMAGE", new string[] {"'Even with such a small hit, your flame seared my skin.'"}}
+                    {"LOW DAMAGE", new string[] {"'You cannot set a blizzard aflame.'"}}
                 }
             },
 
@@ -120,36 +120,33 @@
 
             { "Viking" , new Dictionary<string, string[]>()
                 {
-                    {"HIGH DAMAGE", new string[]{ "I thought I was the only one of my kind left. I'd like to keep it that way.",
-                        "You call yourself one of my kind, eh? Well, let's see if you're telling the truth." }},
-                    {"MEDIUM DAMAGE", new string[] {"We are not the same. You slay mere men - My axe has tasted the blood of gods.",
-                        " " }},
-                    {"LOW DAMAGE", new string[] {" I wonder if you'll break with just this much, copycat.",
-                        " "}}
+                    {"HIGH DAMAGE", new string[]{ "'MELT.'", "'TURN TO ASH.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'May my flames consume you.'", "'I despise you.'" }},
+                    {"LOW DAMAGE", new string[] {"'Can you feel it? The heat is rising.'", "'I will turn you to cinders.'"}}
                 }
             },
 
             { "Rotcher", new Dictionary<string, string[]>()
                 {
-                    {"HIGH DAMAGE", new string[]{ "", "" }},
-                    {"MEDIUM DAMAGE", new string[] {" ", " " }},
-                    {"LOW DAMAGE", new string[] {" ", " "}}
+                    {"HIGH DAMAGE", new string[]{ "'BURN ASUNDER.'", "'I WILL BURN YOU AND THE GRAVE FROM WHICH YOU AROSE.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'You're much more pleasing to the eye when you're on fire.'", "'Explode, flith.'" }},
+                    {"LOW DAMAGE", new string[] {"'May my flames cleanse this world of you.'", "'Ignite.'"}}
                 }
             },
 
             { "Herald", new Dictionary<string, string[]>()
                 {
-                    {"HIGH DAMAGE", new string[]{ "", "" }},
-                    {"MEDIUM DAMAGE", new string[] {" ", " " }},
-                    {"LOW DAMAGE", new string[] {" ", " "}}
+                    {"HIGH DAMAGE", new string[]{ "'MAY YOU INCINERATE, IMPOSTER.'", "'THERE CAN BE ONLY ONE. ONLY ME.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'IGNITE, FAKER.'", "'IMMOLATE.'" }},
+                    {"LOW DAMAGE", new string[] {"'May my flames burn your impurity.'", "'Catch fire.'"}}
                 }
             },
 
             { "Druid", new Dictionary<string, string[]>()
                 {
-                    {"HIGH DAMAGE", new string[]{ "", "" }},
-                    {"MEDIUM DAMAGE", new string[] {" ", " " }},
-                    {"LOW DAMAGE", new string[] {" ", " "}}
+                    {"HIGH DAMAGE", new string[]{"'I'LL BURN YOUR BEASTS WITH YOU.'", "'LET MY FLAMES TURN YOU AND YOUR CREATURES TO THE DARKEST OF ASH.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'YOU MAKE FOR GREAT TINDER.'", "'I WILL RAZE THE GROUND THE BENEATH YOU.'" }},
+                    {"LOW DAMAGE", new string[] {"'I will set you alight.'", "'You are not prepared for what's to come.'"}}
                 }
             }
         };

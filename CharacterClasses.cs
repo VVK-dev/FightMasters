@@ -51,7 +51,7 @@
             { "Druid", new Dictionary<string, string[]>()
                 {
                     {"HIGH DAMAGE", new string[]{"'Don't take this personally.'", "I have no enemity with you. You're simply in my way." }},
-                    {"MEDIUM DAMAGE", new string[] {"'This is a warning. Surrender.'", "'Your creatures cannot save you. You will freeze and shatter.'"}},
+                    {"MEDIUM DAMAGE", new string[] {"'This is a warning. Surrender.'", "'Your creatures cannot save you. You will shatter.'"}},
                     {"LOW DAMAGE", new string[] {"'You can summon as many beasts as you want, I shall cull them all.'", "'Your beasts cannot stop my axe.'"}}
                 }
             }
@@ -86,7 +86,7 @@
 
             { "Druid", new Dictionary<string, string[]>()
                 {
-                    {"HIGH DAMAGE", new string[]{"'Your claws are sharper than your creatures it would *cough* seem.'"} },
+                    {"HIGH DAMAGE", new string[]{"'*cough*..Your own claws are even sharper than your creatures it would *cough* seem...'"} },
                     {"MEDIUM DAMAGE", new string[] {"'You fight well, beastmaster.'"}},
                     {"LOW DAMAGE", new string[] {"'Congratulations. You grazed me.'"}}
                 }
@@ -300,7 +300,7 @@
     public class Druid : ICharClass
     {
 
-        //Phys/lightning damage based mage summoner
+        //Summoner-Mage
 
         public string ClassName { get; } = "Druid";
         public int HealthPoints { get; } = 80;
@@ -311,7 +311,8 @@
         public int LightningResistance { get; } = 10;
         public int PoisonResistance { get; } = 8;
         public int SummonSlots { get; } = 4;
-        public ICard[] ClassCards { get; } = { /*TODO: Fill this in once cards are made*/};
+        public ICard[] ClassCards { get; } = { new NeutralCards.SummonWolf() /*TODO: Fill this in once cards are made*/};
+        //Although Summon wolf is a neutral card, the druid gets an extra copy of it as a class card
 
         public Dictionary<string, Dictionary<string, string[]>> OnDealDamageVoiceLines { get; } =
             new() {

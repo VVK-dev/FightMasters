@@ -350,7 +350,6 @@
             {
 
                 return PlayHelper.SummonMinions(this, p1);
-
             }
 
             public string DeactivateEffects(Player p1, Player p2)

@@ -150,14 +150,6 @@
 
     internal class RotcherCards { }
 
-    internal class DruidCards
-    {
-
-
-
-
-
-
-    }
+    internal class DruidCards { }
 
 }

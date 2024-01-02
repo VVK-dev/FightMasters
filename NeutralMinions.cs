@@ -61,7 +61,7 @@
                     }
 
                 }
-
+              
                 //Deal damage
 
                 (ActSummary, bool[] dodged) = PlayHelper.DamagePlayer(this, p1, p2);

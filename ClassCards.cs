@@ -105,7 +105,7 @@
 
                 p1.CurrentStamina -= this.StaminaCost;
 
-                string TokenSummary = PlayHelper.AddCasterTokens(this, p2);
+                string TokenSummary = PlayHelper.AddCasterTokens(this.TokensAppliedCaster!, p1);
 
                 p2.OnDealDamageCardEffects += OnOpponentDamage;
 
@@ -113,8 +113,11 @@
 
             }
 
+            //Method that triggers when the opponent does damage next
             private static Damage OnOpponentDamage((Player p2, Damage d) input)
             {
+
+                //Must create a seperate dictionary here for this as this method is static
 
                 Dictionary<string, List<IToken>> ChillTokens = new() {
 
@@ -122,7 +125,7 @@
 
                 };
 
-                TokenHandler.AddTokens(ChillTokens, input.p2);
+                PlayHelper.AddOpponentTokens(ChillTokens, input.p2);
 
                 return input.d;
 

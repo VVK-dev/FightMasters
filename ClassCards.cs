@@ -147,6 +147,53 @@
 
         }
 
+        internal class SnowstormProtection : ICard
+        {
+            //Properties
+
+            public string Name { get; } = "Snowstorm Protection";
+
+            public string Description { get; } = "Increase all your resistances by 20% until your next turn and gain 2 block tokens.";
+
+            public int StaminaCost { get; } = 7;
+
+            public Damage[]? DamageDealt { get; } = null;
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = new() {
+
+                { "<+>", new List<IToken>() { new BlockToken(), new BlockToken() } }
+
+            };
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
+
+            public IMinion[]? Summons { get; } = null;
+
+            public bool HasDeactivate { get; } = false;
+
+            //Constructor
+
+            public SnowstormProtection() { }
+
+            //Methods
+
+            public string Play(Player p1, Player p2)
+            {
+
+                StringBuilder PlaySummary = new();
+
+                p1.CurrentStamina -= this.StaminaCost;
+
+                //Increase resistances
+                foreach (string resistance in p1.Resistances.Keys)
+                {
+
+                    p1.Resistances[resistance] += 20;
+                    PlaySummary.Append($"{p1.PlayerName}'s {resistance} resistance increases by 20%.");
+        }
+
     }
 
     internal class HeraldCards { }

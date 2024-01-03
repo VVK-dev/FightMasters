@@ -76,7 +76,7 @@
 
             public string Description { get; } = "Gain 2 block tokens. Apply 2 chill tokens to your opponent the next time they attack you.";
 
-            public int StaminaCost { get; } = 4;
+            public int StaminaCost { get; } = 5;
 
             public Damage[]? DamageDealt { get; } = null;
 

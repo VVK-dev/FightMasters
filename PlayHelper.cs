@@ -1,4 +1,6 @@
-﻿namespace FightMasters
+﻿using System.Text;
+
+namespace FightMasters
 {
     internal abstract class PlayHelper
     {
@@ -120,47 +122,48 @@
 
         //Method to add tokens to caster
 
-        public static string AddCasterTokens(ICard Card, Player p1)
+        public static string AddCasterTokens(Dictionary<string, List<IToken>> TokensAppliedCaster, Player p1)
         {
 
-            string CasterTokenSummary = "";
+            StringBuilder CasterTokenSummary = new();
 
-            if (Card.TokensAppliedCaster != null)
+            if (TokensAppliedCaster != null)
             {
-                List<IToken> AddedTokens = TokenHandler.AddTokens(Card.TokensAppliedCaster, p1);
+                List<IToken> AddedTokens = TokenHandler.AddTokens(TokensAppliedCaster, p1);
 
                 foreach (IToken Token in AddedTokens)
                 {
-                    CasterTokenSummary += $"{Token} applied to {p1.PlayerName}  ";
+                    CasterTokenSummary.AppendLine($"{Token} applied to {p1.PlayerName}.");
 
                 }
 
             }
 
-            return CasterTokenSummary;
+            return CasterTokenSummary.ToString();
 
         }
 
         //Method to apply tokens to opponent
 
-        public static string AddOpponentTokens(ICard Card, Player p2)
+        public static string AddOpponentTokens(Dictionary<string, List<IToken>> TokensAppliedOpponent, Player p2)
         {
 
-            string OpponentTokenSummary = "";
+            StringBuilder OpponentTokenSummary = new();
 
-            if (Card.TokensAppliedOpponent != null)
+            if (TokensAppliedOpponent != null)
             {
-                List<IToken> AddedTokens = TokenHandler.AddTokens(Card.TokensAppliedOpponent, p2);
+                List<IToken> AddedTokens = TokenHandler.AddTokens(TokensAppliedOpponent, p2);
 
                 foreach (IToken Token in AddedTokens)
                 {
-                    OpponentTokenSummary += $"{Token} applied to {p2.PlayerName} ";
+                 
+                    OpponentTokenSummary.AppendLine($"{Token} applied to {p2.PlayerName}.");
 
                 }
 
             }
 
-            return OpponentTokenSummary;
+            return OpponentTokenSummary.ToString();
         }
 
         //Method to summon minions

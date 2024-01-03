@@ -1,4 +1,6 @@
-﻿namespace FightMasters
+﻿using System.Text;
+
+namespace FightMasters
 {
 
     //STORAGE FOR ALL CLASS SPECIFIC CARDS
@@ -192,7 +194,7 @@
 
                     p1.Resistances[resistance] += 20;
                     PlaySummary.Append($"{p1.PlayerName}'s {resistance} resistance increases by 20%.");
-        }
+                }
 
                 //Add block tokens
 
@@ -291,9 +293,98 @@
             public override string ToString()
             {
                 return CardPrinter.PrintCard(this);
-    }
+            }
 
-    internal class HeraldCards { }
+        }
+
+        internal class FromTheirAshes : ICard
+        {
+
+            //Properties
+
+            public string Name { get; } = "From their Ashes...";
+
+            public string Description { get; } = "Regain 2 health for every burn token on your opponent. If they have none, apply 5 burn tokens onto them and gain 2 dodge tokens.";
+
+            public int StaminaCost { get; } = 9;
+
+            public Damage[]? DamageDealt { get; } = null;
+
+            public int Heal { get; } = 2;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = new() {
+
+                { "</>", new List<IToken>() { new DodgeToken(), new DodgeToken() } }
+
+            };
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = new()
+            {
+                {"<B>", new List<IToken>{new BurnToken(), new BurnToken(), new BurnToken(), new BurnToken(), new BurnToken() } }
+            };
+
+            public IMinion[]? Summons { get; } = null;
+
+            public bool HasDeactivate { get; } = false;
+
+            //Constructor
+
+            public FromTheirAshes() { }
+
+            //Methods
+
+            public string Play(Player p1, Player p2)
+            {
+
+                p1.CurrentStamina -= this.StaminaCost;
+
+                StringBuilder PlaySummary = new();
+
+                //If opponent has burn tokens, heal caster per token
+                if (p2.TokensActive.ContainsKey("<B>")) {
+
+                    for (int i = 0; i < p2.TokensActive["<B>"].Count; i++)
+                    {
+
+                        PlaySummary.AppendLine(PlayHelper.HealPlayer(this, p1));
+
+                    }
+
+                    return PlaySummary.ToString();
+                }
+
+                //If not:
+
+                //1) apply burn tokens to them
+
+                PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2);
+
+                //2) add dodge tokens to caster
+
+                PlayHelper.AddCasterTokens(this.TokensAppliedCaster!, p1);
+
+                return PlaySummary.ToString();
+
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+
+                //Has no effects to deactivate
+
+                return string.Empty;
+
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
+            }
+
+        }
+
+
+    }
 
     internal class RotcherCards { }
 

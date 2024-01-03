@@ -194,6 +194,103 @@
                     PlaySummary.Append($"{p1.PlayerName}'s {resistance} resistance increases by 20%.");
         }
 
+                //Add block tokens
+
+                string TokenSummary = PlayHelper.AddCasterTokens(this.TokensAppliedCaster!, p2);
+
+                return PlaySummary.AppendLine(TokenSummary).ToString();
+
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+
+                StringBuilder DeactivateSummary = new("Snowstorm protection's effect wears off.\n");
+
+                //Resistances return to normal
+                foreach (string resistance in p1.Resistances.Keys)
+                {
+
+                    p1.Resistances[resistance] += 20;
+                    DeactivateSummary.AppendLine($"{p1.PlayerName}'s {resistance} resistance decreases by 20%.");
+                }
+
+                return DeactivateSummary.ToString();
+
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
+            }
+
+        }
+
+
+    }
+
+    internal class HeraldCards {
+
+        //Class specific cards for the Herald class
+
+        internal class SwiftInferno: ICard
+        {
+
+            //Properties
+
+            public string Name { get; } = "Swift Inferno";
+
+            public string Description { get; } = "Quickly swing twice at your opponent with your emblazoned katana, dealing 2 physical on the first hit and 2 fire damage on the second, and gain a dodge token.";
+
+            public int StaminaCost { get; } = 5;
+
+            public Damage[]? DamageDealt { get; } = { new Damage("Physical", 2), new Damage("Fire", 2) };
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = new() {
+
+                { "</>", new List<IToken>() { new DodgeToken() } }
+
+            };
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
+
+            public IMinion[]? Summons { get; } = null;
+
+            public bool HasDeactivate { get; } = false;
+
+            //Constructor
+
+            public SwiftInferno() { }
+
+            //Methods
+
+            public string Play(Player p1, Player p2)
+            {
+
+                p1.CurrentStamina -= this.StaminaCost;
+
+                (string PlaySummary, _) = PlayHelper.DamagePlayer(this, p1, p2);
+
+                PlaySummary += PlayHelper.AddOpponentTokens(this.TokensAppliedCaster!, p2);
+
+                return PlaySummary;
+
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+
+                //Has no effects to deactivate
+
+                return string.Empty;
+
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
     }
 
     internal class HeraldCards { }

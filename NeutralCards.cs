@@ -110,7 +110,7 @@
                     {
 
                         PlaySummary += "The attack has lingering effects...";
-                        PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
+                        PlaySummary += PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2);
 
                     }
                 }
@@ -180,7 +180,7 @@
                 {
 
                     PlaySummary += "The emblazoned atmosphere leaves its mark...";
-                    PlaySummary += PlayHelper.AddOpponentTokens(this, p2);
+                    PlaySummary += PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2);
 
                 }
 

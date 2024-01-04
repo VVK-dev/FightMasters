@@ -386,7 +386,88 @@ namespace FightMasters
 
     }
 
-    internal class RotcherCards { }
+    internal class RotcherCards {
+
+        internal class MudArrows : ICard
+        {
+
+            //Properties
+
+            public string Name { get; } = "Mud Arrows";
+
+            public string Description { get; } = "Shoot 3 'mud' covered arrows at your opponent each dealing 1 physical damage and applying a poison token if they hit.";
+
+            public int StaminaCost { get; } = 4;
+
+            public Damage[]? DamageDealt { get; } = { new Damage("Physical", 1), new Damage("Physical", 1), new Damage("Physical", 1) };
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = new() {
+
+                { "<P>", new List<IToken>() { new PoisonToken() } }
+
+            };
+
+            public IMinion[]? Summons { get; } = null;
+
+            public bool HasDeactivate { get; } = false;
+
+            //Constructor
+
+            public MudArrows() { }
+
+            //Methods
+
+            public string Play(Player p1, Player p2)
+            {
+
+                p1.CurrentStamina -= this.StaminaCost;
+
+                StringBuilder PlaySummary = new();
+
+                //Deal damage
+
+                (string DamageSummary, bool[] hit) = PlayHelper.DamagePlayer(this, p1, p2);
+
+                PlaySummary.AppendLine(DamageSummary);
+
+                //Per arrow hit, add a poison token
+
+                for (int i = 0; i < hit.Length; i++)
+                {
+                    if (hit[i])
+                    {
+
+                        PlaySummary.AppendLine(PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2));
+
+                    }
+                    
+                }
+
+                return PlaySummary.ToString();
+
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+
+                //Has no effects to deactivate
+
+                return string.Empty;
+
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
+            }
+
+        }
+
+    }
 
     internal class DruidCards { }
 

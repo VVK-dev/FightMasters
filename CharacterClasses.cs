@@ -209,43 +209,40 @@
         public ICard[] ClassCards { get; } = { /*TODO: Fill this in once cards are made*/};
 
         public Dictionary<string, Dictionary<string, string[]>> OnDealDamageVoiceLines { get; } =
-            new() {
+        new() {
 
-                { "Viking" , new Dictionary<string, string[]>()
-                    {
-                        {"HIGH DAMAGE", new string[]{ "I thought I was the only one of my kind left. I'd like to keep it that way.",
-                            "You call yourself one of my kind, eh? Well, let's see if you're telling the truth." }},
-                        {"MEDIUM DAMAGE", new string[] {"We are not the same. You slay mere men - My axe has tasted the blood of gods.",
-                            " " }},
-                        {"LOW DAMAGE", new string[] {" I wonder if you'll break with just this much, copycat?",
-                            " "}}
-                    }
-                },
-
-                { "Rotcher", new Dictionary<string, string[]>()
-                    {
-                        {"HIGH DAMAGE", new string[]{ "", "" }},
-                        {"MEDIUM DAMAGE", new string[] {" ", " " }},
-                        {"LOW DAMAGE", new string[] {" ", " "}}
-                    }
-                },
-
-                { "Herald", new Dictionary<string, string[]>()
-                    {
-                        {"HIGH DAMAGE", new string[]{ "", "" }},
-                        {"MEDIUM DAMAGE", new string[] {" ", " " }},
-                        {"LOW DAMAGE", new string[] {" ", " "}}
-                    }
-                },
-
-                { "Druid", new Dictionary<string, string[]>()
-                    {
-                        {"HIGH DAMAGE", new string[]{ "", "" }},
-                        {"MEDIUM DAMAGE", new string[] {" ", " " }},
-                        {"LOW DAMAGE", new string[] {" ", " "}}
-                    }
+            { "Viking" , new Dictionary<string, string[]>()
+                {
+                    {"HIGH DAMAGE", new string[]{"'HAHAHA CAN YOU FEEL IT? I'M GOING TO TURN YOU TO LIQUID FROM THE INSIDE OUT!'"}},
+                    {"MEDIUM DAMAGE", new string[] {"'Even your ice isn't impervious to my poisons!'","'May the rot take you.'"}},
+                    {"LOW DAMAGE", new string[] {"'The rot caallls for youuuu...kyehkyehkyeh.'"}}
                 }
-            };
+            },
+
+            { "Rotcher", new Dictionary<string, string[]>()
+                {
+                    {"HIGH DAMAGE", new string[]{ "'Are you eating well? I can see your ribs from here heheheh.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'The cursed legion can have only one general. And that is me.'", "'May you wither just as your skin has.'" }},
+                    {"LOW DAMAGE", new string[] {"'A pile of decrepit bones is what you are.'"}}
+                }
+            },
+
+            { "Herald", new Dictionary<string, string[]>()
+                {
+                    {"HIGH DAMAGE", new string[]{ "'A POX UPON YOU!'", "'Born from fire, dead to filth.'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'PARRY THIS!'"}},
+                    {"LOW DAMAGE", new string[] {"'Burn all you want, you aren't immune to my plagues heheh.'", "'Give in.'"}}
+                }
+            },
+
+            { "Druid", new Dictionary<string, string[]>()
+                {
+                    {"HIGH DAMAGE", new string[]{ "'A GRAVE FOR YOU AND YOUR BEASTS!'", "'POISON IN YOUR VEINS!'" }},
+                    {"MEDIUM DAMAGE", new string[] {"'A PLAGUE ON YOUR ENTIRE FOREST!'"}},
+                    {"LOW DAMAGE", new string[] {"'Your creatures are not immune to me beastmaster, and neither are you.'"}}
+                }
+            }
+        };
 
         public Dictionary<string, Dictionary<string, string[]>> OnTakeDamageVoiceLines { get; } =
             new() {

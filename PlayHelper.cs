@@ -102,17 +102,17 @@ namespace FightMasters
 
         //Method to heal player
 
-        public static string HealPlayer(ICard Card, Player p1)
+        public static string HealPlayer(int Heal, Player p1)
         {
 
             string HealSummary = "";
 
-            if (Card.Heal > 0)
+            if (Heal > 0)
             {
 
-                p1.ActiveHp += Card.Heal;
+                p1.ActiveHp += Heal;
 
-                HealSummary = $"{p1.PlayerName} heals for {Card.Heal} ";
+                HealSummary = $"{p1.PlayerName} heals for {Heal} ";
 
             }
 

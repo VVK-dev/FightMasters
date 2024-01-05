@@ -433,7 +433,7 @@ namespace FightMasters
                         Summon.Duration--;
 
                     }
-                    if (Summon.Duration < 1){ Summon = null; } 
+                    if (Summon.Duration < 1) { Console.WriteLine($"{Summon.Name} unsummoned."); Summon = null; } 
                     
                     //Duration check happens both before and after summon has acted to prevent summon from acting if 
                     //duration is 0 or to remove summon from array if duration is 0 after acting

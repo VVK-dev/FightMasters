@@ -78,20 +78,14 @@
 
                 }
 
-                if ((this.Duration == 1))
+                if ((this.Duration == 1) && (!isWolfPack))
                 {
 
-                    if (!isWolfPack)
-                    {
-                        //If this wolf is part of a pack, it's physical resistance shred effect is permanent
+                    //If this wolf is part of a pack, it's physical resistance shred effect is permanent
 
-                        p2.Resistances["Physical"] = this.OpponentInitialPhysResist;
+                    p2.Resistances["Physical"] = this.OpponentInitialPhysResist;
 
-                        ActSummary += $"{p2.PlayerName}'s physical resistance returns to normal.";
-
-                    }
-
-                    ActSummary += "\n Wolf is unsummoned.";
+                    ActSummary += $"{p2.PlayerName}'s physical resistance returns to normal.";
 
                 }
 

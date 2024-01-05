@@ -346,7 +346,7 @@ namespace FightMasters
                     for (int i = 0; i < p2.TokensActive["<B>"].Count; i++)
                     {
 
-                        PlaySummary.AppendLine(PlayHelper.HealPlayer(this, p1));
+                        PlaySummary.AppendLine(PlayHelper.HealPlayer(this.Heal, p1));
 
                     }
 

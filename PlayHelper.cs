@@ -12,13 +12,11 @@ namespace FightMasters
 
         //Method to deal damage only
 
-        public static (string, bool[]) DamagePlayer(dynamic Item, Player p1, Player p2)
+        public static (string, bool[]) DamagePlayer(IPlayable Item, Player p1, Player p2)
         {
             //This method can be used by both cards and minions
 
-            bool IsCard = ObjCheck(Item);
-
-            bool[] DamageDodged = new bool[Item.DamageDealt.Length];
+            bool[] DamageDodged = Array.Empty<bool>(); 
 
             Span<Damage> DamageSpan = new (Item.DamageDealt);
 
@@ -27,10 +25,12 @@ namespace FightMasters
             if (DamageSpan != null)
             {
 
+                DamageDodged = new bool[Item.DamageDealt!.Length];
+
                 //Before damage is actually dealt, the caster may say something (a voiceline may be triggered)
                 //Voicelines are only triggered on player based damage from cards, not minions
 
-                if(IsCard) { PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageSpan, true); }
+                if(Item is ICard) { PlayDamageSummary += p1.PlayDamageVoiceLines(p2, DamageSpan, true); }
 
                 //Iterating through the damage array of the item
 
@@ -56,7 +56,7 @@ namespace FightMasters
 
                     //Check for poison tokens on player 1
 
-                    if (IsCard) //Poison tokens are only triggered on player based damage from cards, not minions
+                    if (Item is ICard) //Poison tokens are only triggered on player based damage from cards, not minions
                     {
 
                         CurrentDamage = TokenHandler.ActivatePosionTokens(p1, CurrentDamage);
@@ -193,28 +193,6 @@ namespace FightMasters
             }
 
             return MinionsSummonedSummary;
-
-        }
-
-        //Method to check if incoming object is card or summon
-
-        public static bool ObjCheck(object Item)
-        {
-
-            bool IsCard = false;
-
-            if (Item is IMinion) { return IsCard; }
-            else if (Item is ICard)
-            {
-
-                IsCard = true;
-
-                return IsCard;
-
-            }
-            //TO DO: Create custom exception for this case
-
-            else { throw new Exception("The PlayDamage method cannot accept an object that doesn't implement either IMinion or ICard."); }
 
         }
 

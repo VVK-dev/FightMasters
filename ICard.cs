@@ -1,24 +1,12 @@
 ﻿namespace FightMasters
 {
-    public interface ICard
+    public interface ICard : IPlayable
     {
         //PROPERTIES
-
-        string Name { get; }
 
         string Description { get; } //Description will include card's description and summons + their effects
 
         int StaminaCost { get; }
-
-        Damage[]? DamageDealt { get; } //List of damage done by this card (as a single card can do multiple types of
-                                       //damage with varying values)
-
-        int Heal { get; }
-
-        Dictionary<string, List<IToken>>? TokensAppliedCaster { get; }
-        //Key = type of token applied as string, Value = tokens applied 
-        Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; }
-        //Key = type of token applied as string, Value = tokens applied 
 
         IMinion[]? Summons { get; }
 

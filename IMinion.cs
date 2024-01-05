@@ -1,23 +1,11 @@
 ﻿namespace FightMasters
 {
-    public interface IMinion
+    public interface IMinion : IPlayable
     {
 
         //PROPERTIES
 
-        string Name { get; }
-
         int Duration { get; set; } //How many turns this minion lasts for
-
-        Damage[]? DamageDealt { get; } //List of damage done by this card (as a single card can do multiple types of
-                                      //damage with varying values)
-
-        int Heal { get; } //Healing done per round
-
-        Dictionary<string, List<IToken>>? TokensAppliedCaster { get; }
-        //Key = type of token applied as string, Value = tokens applied 
-        Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; }
-        //Key = type of token applied as string, Value = tokens applied 
 
         //METHODS
 

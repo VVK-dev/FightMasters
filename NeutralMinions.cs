@@ -20,11 +20,9 @@
 
             //Wolf specific fields
 
-            private int OpponentInitialPhysResist { get; set; }
+            private int TurnsAlive { get; set; }
 
-            private bool isFirstTurn { get; set; } = true;
-
-            private bool isWolfPack { get; set; } = false;
+            private bool IsWolfPack { get; set; } = false;
 
             //Constructor
             public Wolf() { }
@@ -35,7 +33,7 @@
 
                 string ActSummary;
 
-                if (!isWolfPack)
+                if (!IsWolfPack)
                 {
 
                     //If wolf is not part of a pack, check if it should be
@@ -54,7 +52,7 @@
 
                             wolf.Duration++;
 
-                            wolf.isWolfPack = true;
+                            wolf.IsWolfPack = true;
 
                         }
 
@@ -71,21 +69,85 @@
                 if (!dodged[0])
                 {
 
-                    if (isFirstTurn) { this.OpponentInitialPhysResist = p2.Resistances["Physical"]; isFirstTurn = false; }
-
                     p2.Resistances["Physical"] -= 1;
                     ActSummary += $"{p2.PlayerName} loses 1% physical resistance.";
 
                 }
 
-                if ((this.Duration == 1) && (!isWolfPack))
+                this.TurnsAlive++;
+
+                if ((this.Duration == 1) && (!IsWolfPack))
                 {
 
-                    //If this wolf is part of a pack, it's physical resistance shred effect is permanent
+                    //If this wolf isn't part of a pack, it's physical resistance shred effect is temporary
 
-                    p2.Resistances["Physical"] = this.OpponentInitialPhysResist;
+                    //As a wolf only reduces the opponent's physical resistance by 1 per turn it is alive,
+                    //the opponent's physical resistance can be reset to normal by simply adding TurnsAlive
+                    //to their current physical resistance
+
+                    p2.Resistances["Physical"] += this.TurnsAlive;
 
                     ActSummary += $"{p2.PlayerName}'s physical resistance returns to normal.";
+
+                }
+
+                return ActSummary;
+            }
+
+            //ToString
+            public override string? ToString()
+            {
+                return MinionPrinter.PrintMinion(this);
+            }
+
+        }
+
+        internal class Zombie : IMinion
+        {
+
+            public string Name { get; set; } = "Zombie";
+
+            public int Duration { get; set; } = 2;
+
+            public Damage[]? DamageDealt { get; } = { new Damage("Poison", 1) };
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } =
+            new Dictionary<string, List<IToken>> { 
+                
+                { "<P>", new List<IToken> { new PoisonToken() } } 
+                
+            };
+
+            //Constructor
+            public Zombie() { }
+
+            //Methods
+            public string Act(Player p1, Player p2)
+            {
+
+                string ActSummary;
+
+                if (p2.TokensActive.ContainsKey("<P>") && ( (int) this.DamageDealt![0].DamageValue == 1))
+                {
+
+                    this.DamageDealt[0].DamageValue = 2;
+
+                }
+
+                //Deal damage
+
+                (ActSummary, bool[] dodged) = PlayHelper.DamagePlayer(this, p1, p2);
+
+                //If opponent hasn't dodged attack, 50% chance to add a posion token to them
+
+                if (!dodged[0] && (new Random().Next(2) == 0))
+                {
+
+                    PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2);
 
                 }
 

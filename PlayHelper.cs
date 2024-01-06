@@ -168,6 +168,8 @@ namespace FightMasters
 
         //Method to summon minions
 
+        //TO DO: MODIFY THIS TO ONLY TAKE IN MINION[]
+
         public static string SummonMinions(ICard Card, Player p1)
         {
 

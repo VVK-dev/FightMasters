@@ -99,20 +99,14 @@
 
                 //Zap has a 30% chance to apply a shock token to the target
 
-                if (!DamageDodged[0])
+                if (!DamageDodged[0] && (new Random().Next(1,10) <= 3))
                 {
 
                     //If damage isn't dodged, chance to apply shock token
 
-                    Random random = new();
+                    PlaySummary += "The attack has lingering effects...";
+                    PlaySummary += PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2);
 
-                    if (random.Next(1, 10) <= 3)
-                    {
-
-                        PlaySummary += "The attack has lingering effects...";
-                        PlaySummary += PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2);
-
-                    }
                 }
 
                 return PlaySummary;
@@ -328,13 +322,16 @@
 
         internal class SummonWolf : ICard
         {
+
+            //Properties
+
             public string Name { get; } = "Summon Wolf";
 
-            public string Description { get; } = "Summon a wolf to fight by your side for 3 turns. It takes up 1 summon slot. It deals 2 damage per turn and reduces your opponent's physical resistance by 1% everytime it attacks (their resistance goes back to normal after the wolf is unsummoned). If you have atleast 3 wolves, they form a wolf pack, causing each to deal 1 extra damage per turn. This effect also makes the physical resistance they shred from your opponent permanent for the rest if the match (including the resistance shredded until that point). Anytime a wolf is added to the pack, each wolf's duration is increased by 1.";
+            public string Description { get; } = "Summon a wolf to fight by your side for 3 turns. It deals 2 physical damage and reduces your opponent's physical resistance by 1% everytime it attacks (their resistance goes back to normal after the wolf is unsummoned). If you have atleast 3 wolves, they form a wolf pack, causing each to deal 1 extra damage per turn. This effect also makes the physical resistance they shred from your opponent permanent for the rest if the match (including the resistance shredded until that point). Anytime a wolf is added to the pack, each wolf's duration is increased by 1.";
 
             public int StaminaCost { get; } = 3;
 
-            public Damage[] DamageDealt { get; } = { new Damage("Physical", 2) };
+            public Damage[]? DamageDealt { get; } = null;
 
             public int Heal { get; } = 0;
 
@@ -346,10 +343,17 @@
 
             public bool HasDeactivate { get; } = false;
 
+            //Constructor
+
+            public SummonWolf() { }
+
+            //Methods
+
             public string Play(Player p1, Player p2)
             {
 
                 return PlayHelper.SummonMinions(this, p1);
+
             }
 
             public string DeactivateEffects(Player p1, Player p2)
@@ -363,6 +367,55 @@
                 return CardPrinter.PrintCard(this);
             }
 
+        }
+
+    }
+
+    internal class SummonZombie : ICard
+    {
+
+        //Properties
+
+        public string Name { get; } = "Summon Zombie";
+
+        public string Description { get; } = "Summon a zombie to fight by your side for 2 turns. It deals 1 poison damage and has a 50% chance to apply a poison token on hit. If its target already has a poison token on them, it deals double damage.";
+
+        public int StaminaCost { get; } = 2;
+
+        public Damage[]? DamageDealt { get; } = null;
+
+        public int Heal { get; } = 0;
+
+        public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
+
+        public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
+
+        public IMinion[]? Summons { get; } = { new NeutralMinions.Zombie() };
+
+        public bool HasDeactivate { get; } = false;
+
+        //Constructor
+
+        public SummonZombie() { }
+
+        //Methods
+
+        public string Play(Player p1, Player p2)
+        {
+
+            return PlayHelper.SummonMinions(this, p1);
+
+        }
+
+        public string DeactivateEffects(Player p1, Player p2)
+        {
+            //Has no effects to deactivate
+            return string.Empty;
+        }
+
+        public override string ToString()
+        {
+            return CardPrinter.PrintCard(this);
         }
 
     }

@@ -478,7 +478,7 @@ namespace FightMasters
 
             public string Name { get; } = "Plague Seekers";
 
-            public string Description { get; } = "Conjure a force of pure rot and send it towards your opponent, weakening their nerves and destroying all of their dodge and block tokens, and applying a posion token. Then, Summon a horde of 3 zombies to fight by your side for 2 turns. A zombie deals 1 poison damage and has a 50% chance to apply a poison token on hit. If its target already has a poison token on them, it deals double damage.";
+            public string Description { get; } = "Conjure a force of pure rot and send it towards your opponent, weakening their nerves and destroying all of their dodge and block tokens, and applying a posion token. Then, summon a horde of 3 zombies to fight by your side for 2 turns. A zombie deals 1 poison damage and has a 50% chance to apply a poison token on hit. If its target already has a poison token on them, it deals double damage.";
 
             public int StaminaCost { get; } = 8;
 
@@ -507,7 +507,16 @@ namespace FightMasters
             public string Play(Player p1, Player p2)
             {
 
-                return (string) PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2 ).Concat(PlayHelper.SummonMinions(this, p1));
+                //Remove tokens
+
+                if (p2.TokensActive.ContainsKey("</>")) { p2.TokensActive.Remove("</>"); }
+                if (p2.TokensActive.ContainsKey("<+>")) { p2.TokensActive.Remove("<+>"); }
+
+                IEnumerable<char> PlaySummary = $"All of {p2.PlayerName}'s dodge and block tokens are destroyed!";
+
+                //Add posion token, summon zombies and return the total string
+
+                return (string) PlaySummary.Concat(PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2).Concat(PlayHelper.SummonMinions(this, p1))); ;
 
             }
 

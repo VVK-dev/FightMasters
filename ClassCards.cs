@@ -389,7 +389,7 @@ namespace FightMasters
 
     internal class RotcherCards 
     {
-
+        
         //Class cards for the rotcher class
 
         internal class MudArrows : ICard
@@ -462,6 +462,59 @@ namespace FightMasters
 
                 return string.Empty;
 
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
+            }
+
+        }
+
+        internal class PlagueSeekers : ICard
+        {
+
+            //Properties
+
+            public string Name { get; } = "Plague Seekers";
+
+            public string Description { get; } = "Conjure a force of pure rot and send it towards your opponent, weakening their nerves and destroying all of their dodge and block tokens, and applying a posion token. Then, Summon a horde of 3 zombies to fight by your side for 2 turns. A zombie deals 1 poison damage and has a 50% chance to apply a poison token on hit. If its target already has a poison token on them, it deals double damage.";
+
+            public int StaminaCost { get; } = 8;
+
+            public Damage[]? DamageDealt { get; } = null;
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = null;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = new() {
+
+                { "<P>", new List<IToken>() { new PoisonToken() } }
+
+            };
+
+            public IMinion[]? Summons { get; } = { new NeutralMinions.Zombie(), new NeutralMinions.Zombie(), new NeutralMinions.Zombie() };
+
+            public bool HasDeactivate { get; } = false;
+
+            //Constructor
+
+            public PlagueSeekers() { }
+
+            //Methods
+
+            public string Play(Player p1, Player p2)
+            {
+
+                return (string) PlayHelper.AddOpponentTokens(this.TokensAppliedOpponent!, p2 ).Concat(PlayHelper.SummonMinions(this, p1));
+
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+                //Has no effects to deactivate
+                return string.Empty;
             }
 
             public override string ToString()

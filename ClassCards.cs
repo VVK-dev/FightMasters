@@ -305,9 +305,9 @@ namespace FightMasters
 
             public string Name { get; } = "From their Ashes...";
 
-            public string Description { get; } = "Regain 2 health for every burn token on your opponent. If they have none, apply 5 burn tokens onto them and gain 2 dodge tokens.";
+            public string Description { get; } = "Regain 2 health for every burn token on your opponent. If they have none, apply 3 burn tokens onto them and gain a dodge token.";
 
-            public int StaminaCost { get; } = 9;
+            public int StaminaCost { get; } = 5;
 
             public Damage[]? DamageDealt { get; } = null;
 
@@ -315,7 +315,7 @@ namespace FightMasters
 
             public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = new() {
 
-                { "</>", new List<IToken>() { new DodgeToken(), new DodgeToken() } }
+                { "</>", new List<IToken>() { new DodgeToken() } }
 
             };
 

@@ -231,7 +231,8 @@ namespace FightMasters
 
     }
 
-    internal class HeraldCards {
+    internal class HeraldCards
+    {
 
         //Class specific cards for the Herald class
 
@@ -242,11 +243,11 @@ namespace FightMasters
 
             public string Name { get; } = "Swift Inferno";
 
-            public string Description { get; } = "Quickly swing twice at your opponent with your emblazoned katana, dealing 2 physical on the first hit and 2 fire damage on the second, and gain a dodge token.";
+            public string Description { get; } = "Quickly swing twice at your opponent with your emblazoned katana, dealing 2 physical damage on the first hit and 3 fire damage on the second, and gain a dodge token.";
 
             public int StaminaCost { get; } = 5;
 
-            public Damage[]? DamageDealt { get; } = { new Damage("Physical", 2), new Damage("Fire", 2) };
+            public Damage[]? DamageDealt { get; } = { new Damage("Physical", 2), new Damage("Fire", 3) };
 
             public int Heal { get; } = 0;
 

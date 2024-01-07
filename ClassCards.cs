@@ -387,7 +387,10 @@ namespace FightMasters
 
     }
 
-    internal class RotcherCards {
+    internal class RotcherCards 
+    {
+
+        //Class cards for the rotcher class
 
         internal class MudArrows : ICard
         {
@@ -396,11 +399,11 @@ namespace FightMasters
 
             public string Name { get; } = "Mud Arrows";
 
-            public string Description { get; } = "Shoot 3 'mud' covered arrows at your opponent each dealing 1 physical damage and applying a poison token if they hit.";
+            public string Description { get; } = "Shoot 3 'mud' covered arrows at your opponent each dealing 2 physical damage and applying a poison token if they hit.";
 
             public int StaminaCost { get; } = 4;
 
-            public Damage[]? DamageDealt { get; } = { new Damage("Physical", 1), new Damage("Physical", 1), new Damage("Physical", 1) };
+            public Damage[]? DamageDealt { get; } = { new Damage("Physical", 2), new Damage("Physical", 2), new Damage("Physical", 2) };
 
             public int Heal { get; } = 0;
 

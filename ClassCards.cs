@@ -246,7 +246,7 @@ namespace FightMasters
 
             public IMinion[]? Summons { get; } = null;
 
-            public bool HasDeactivate { get; } = false;
+            public bool HasDeactivate { get; } = true;
 
             //Constructor
 

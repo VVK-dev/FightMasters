@@ -149,6 +149,79 @@ namespace FightMasters
 
         }
 
+        internal class Repurpice : ICard
+        {
+            //Properties
+
+            public string Name { get; } = "Repurpice";
+
+            public string Description { get; } = "Convert each chill token on your opponent into block tokens for yourself.";
+
+            public int StaminaCost { get; } = 2;
+
+            public Damage[]? DamageDealt { get; } = null;
+
+            public int Heal { get; } = 0;
+
+            public Dictionary<string, List<IToken>>? TokensAppliedCaster { get; } = new() {
+
+                { "<+>", new List<IToken>() { new BlockToken() } }
+
+            };
+
+            public Dictionary<string, List<IToken>>? TokensAppliedOpponent { get; } = null;
+
+            public IMinion[]? Summons { get; } = null;
+
+            public bool HasDeactivate { get; } = false;
+
+            //Constructor
+
+            public Repurpice() { }
+
+            //Methods
+
+            public string Play(Player p1, Player p2)
+            {
+
+                p1.CurrentStamina -= this.StaminaCost;
+
+                StringBuilder PlaySummary = new();
+
+                if (p2.TokensActive.ContainsKey("<C>"))
+                {
+
+                    for (int i = p2.TokensActive["<C>"].Count; i >= 0; i--)
+                    {
+
+                        PlaySummary.AppendLine(PlayHelper.AddCasterTokens(this.TokensAppliedCaster!, p1));
+
+                    }
+
+                    p2.TokensActive.Remove("<C>");
+
+                }
+
+                return PlaySummary.ToString();
+
+            }
+
+            public string DeactivateEffects(Player p1, Player p2)
+            {
+
+                //Has no effects to deactivate
+
+                return string.Empty;
+
+            }
+
+            public override string ToString()
+            {
+                return CardPrinter.PrintCard(this);
+            }
+
+        }
+
         internal class SnowstormProtection : ICard
         {
             //Properties

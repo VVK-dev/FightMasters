@@ -1,6 +1,6 @@
 License
 
-Copyright (c) 2023 Varun Venkatadri (also known as VVK-dev)
+Copyright (c) 2023-2024 Varun Venkatadri (also known as VVK-dev)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,12 @@ form of a legal contract, which itself may contain further stipulations if so
 desired by the original author (Varun Venkatadri), before incorporating any
 portion of this code into their project.
 
-3. Patent Protection:
-   - No person or organization, except the original author (Varun Venkatadri), 
-may obtain patents for any aspects of the Software. By using the Software, you 
-agree not to seek, obtain, or enforce any patents on the Software's technology,
-components, or algorithms. The original author (Varun Venkatadri) retains the 
-exclusive right to seek and enforce patents related to the Software.
+3. Patent Protection: No person or organization, except the original author 
+(Varun Venkatadri), may obtain patents for any aspects of the Software. By 
+using the Software, you agree not to seek, obtain, or enforce any patents 
+on the Software's technology, components, or algorithms. The original 
+author (Varun Venkatadri) retains the exclusive right to seek and enforce 
+patents related to the Software.
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
